@@ -1,6 +1,6 @@
 # 在 AI 時代如何學英文 — Emma’s English Class
 
-7 個單元、13 張投影片（單檔版含目錄共 14 張）。**一個單元一個 HTML**，改哪一段就開哪個檔，不會動到別的單元。
+7 個單元、13 張投影片（單檔版把目錄接在最後，共 14 張）。**一個單元一個 HTML**，改哪一段就開哪個檔，不會動到別的單元。
 
 風格沿用 `ref/` 裡的簡報草稿：暖米白紙面 `#FBF7F3` × 玫瑰粉 `#C98E97`，
 每一頁都是同一種版型（頂部色帶 + PART 標籤 + 大標 + 分隔線 + 內容），**不做章節封面頁**。
@@ -9,8 +9,8 @@
 
 ```
 emmaenglishclass/
-├── index.html            目錄頁（點單元跳過去，或按 → 從封面開始）
-├── 01-cover.html         開場          封面 · 關於 Emma · 今天的五段路   3 張
+├── index.html            開場（第一張就是封面）· 關於 Emma · 今天的五段路   3 張
+├── toc.html              目錄頁（按 Space 從任一頁跳過來）
 ├── 02-mindset.html       Part One      Mindset                     2 張
 ├── 03-goals.html         Part Two      Specific Goal               1 張
 ├── 04-ai3p.html          Part Three    AI–3P（P1 / P2 / P3）        3 張
@@ -49,7 +49,7 @@ emmaenglishclass/
 # 直接開檔就能放
 open index.html
 
-# 或產生單一檔案（可以整包 dist/ 丟到靜態空間）
+# 或產生單一檔案（可以整包 dist/ 丟到靜態空間；第一張同樣是封面，目錄在最後）
 node build.mjs
 open dist/emmaenglishclass.html
 ```
@@ -61,7 +61,7 @@ open dist/emmaenglishclass.html
 | `→` | 下一張（到單元最後一張會自動跳下個單元） |
 | `←` | 上一張 |
 | `Tab` | 全螢幕 |
-| `Space` | 回目錄 |
+| `Space` | 回目錄（`toc.html`） |
 
 舞台固定 `1280 × 720`，由 `deck.js` 依視窗大小等比縮放，投影機解析度不同也不會跑版。
 

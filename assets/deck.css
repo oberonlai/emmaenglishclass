@@ -293,11 +293,11 @@ p{margin:0; line-height:1.75;}
 .rescards > .card:nth-child(5){background:var(--tint-c);}
 .rescards .card .t{font-family:var(--disp); font-size:25px; font-weight:700; color:#624B50;}
 .rescards .card .cn{font-size:18px; color:#B07982; margin-top:6px; font-weight:500;}
-.rescards .card .ex{font-size:20px; color:#756166; line-height:1.55; margin-top:12px; font-weight:400;}
+.rescards .card .ex{font-size:20px; color:#756166; line-height:1.6; margin-top:13px; font-weight:400;}
 .rescards .arw{display:grid; place-items:center; font-size:28px; color:#BD7F89;}
 
 /* ── 強調底色帶 ─────────────────────────── */
-.strip{background:var(--tint-e); border-radius:6px; padding:15px 34px; text-align:center;}
+.strip{background:var(--tint-e); border-radius:6px; padding:14px 34px; text-align:center;}
 .strip .t{font-size:26px; font-weight:700; color:var(--plum);}
 .strip.left{text-align:left;}
 .strip.soft{background:var(--tint-d);}
