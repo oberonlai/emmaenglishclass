@@ -1,0 +1,360 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap");
+
+/* ═══════════════════════════════════════════════
+   在 AI 時代如何學英文 — Emma's English Class 簡報樣式
+   舞台固定 1280 × 720，由 deck.js 等比縮放
+   暖米白紙面 + 玫瑰粉主色，全頁一致的內容版型（不做章節首頁）
+   ═══════════════════════════════════════════════ */
+
+:root{
+  /* 紙面 */
+  --paper:   #FBF7F3;
+  --paper-2: #F6EFEA;
+
+  /* 玫瑰色階（取自簡報草稿） */
+  --tint-a:  #F5E6E9;
+  --tint-b:  #F8EEEB;
+  --tint-c:  #F1E0E4;
+  --tint-d:  #F0DDE0;
+  --tint-e:  #EED7DB;
+
+  /* 文字 */
+  --ink:     #5C4549;   /* 標題 */
+  --ink-2:   #4A3639;   /* 更重的標題 */
+  --body:    #705D60;   /* 內文 */
+  --mute:    #92767B;   /* 次文 */
+  --faint:   #B69EA2;   /* 標註 */
+  --plum:    #684A50;   /* 重點句 */
+
+  /* 主色 */
+  --rose:      #C98E97;
+  --rose-deep: #A66F78;
+  --rose-mid:  #B27D86;
+  --rose-lite: #D9AAB2;
+  --rose-sk:   rgba(201,142,151,.14);
+
+  --line:   #E7CDD1;
+  --line-2: rgba(92,69,73,.10);
+
+  --sans: "Archivo", "Noto Sans TC", -apple-system, "PingFang TC", sans-serif;
+  --disp: "Archivo", "Noto Sans TC", -apple-system, "PingFang TC", sans-serif;
+  --mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+
+  /* 字級（1280×720 舞台內的絕對值，一律偏大） */
+  --fs-mega: 76px;
+  --fs-h1:   50px;
+  --fs-h2:   34px;
+  --fs-lead: 27px;
+  --fs-body: 23px;
+  --fs-note: 17px;
+  --fs-eye:  15px;
+}
+
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+#viewport{
+  position:fixed; inset:0; overflow:hidden;
+  background:
+    radial-gradient(100% 74% at 88% 2%, rgba(201,142,151,.10), transparent 62%),
+    radial-gradient(86% 66% at 2% 100%, rgba(182,158,162,.10), transparent 62%),
+    var(--paper);
+}
+#stage{
+  position:absolute; top:0; left:0;
+  width:1280px; height:720px;
+  transform-origin:top left;
+}
+#stage.leaving{opacity:0; transition:opacity .26s ease;}
+
+/* ── 版面骨架：頂部色帶 + 頁尾 ───────────────── */
+/* 草稿每一頁都有一條 10px 的玫瑰色頂帶，這裡用 .hull 的位置畫出來 */
+.hull{position:absolute; left:0; right:0; top:0; height:10px; background:var(--rose); z-index:40; pointer-events:none;}
+
+.eyebrow-slot{
+  position:absolute; left:72px; top:46px; z-index:60;
+  font-family:var(--disp); font-size:13.5px; font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--rose-deep);
+  display:flex; align-items:center; gap:9px; white-space:nowrap;
+}
+.eyebrow-slot .u{color:var(--rose-deep);}
+.eyebrow-slot span+span{color:var(--faint);}
+
+#pageno{
+  position:absolute; right:72px; bottom:36px; z-index:60;
+  font-family:var(--mono); font-size:13px; letter-spacing:.12em; color:var(--faint);
+  font-variant-numeric:tabular-nums;
+}
+#railwrap{position:absolute; left:0; right:0; top:0; height:10px; z-index:59;}
+#rail{height:10px; width:0; background:var(--rose-deep);
+  transition:width .5s cubic-bezier(.2,.7,.3,1);}
+
+#nav{position:absolute; right:72px; bottom:64px; z-index:60; display:flex; gap:6px;}
+#nav button{
+  width:32px;height:32px; background:transparent; border:1px solid var(--line);
+  color:var(--faint); border-radius:3px; cursor:pointer; display:grid; place-items:center; transition:.2s;
+}
+#nav button:hover{color:var(--rose-deep); border-color:var(--rose);}
+#nav button:focus-visible{outline:2px solid var(--rose); outline-offset:2px;}
+#nav svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+#help{
+  position:absolute; left:72px; bottom:36px; z-index:60;
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; color:var(--faint);
+  display:flex; align-items:center; gap:20px;
+}
+#help button{
+  font:inherit; letter-spacing:inherit; color:inherit;
+  background:transparent; border:0; padding:3px 2px; margin:0;
+  cursor:pointer; white-space:nowrap; transition:color .18s ease;
+}
+#help button:hover{color:var(--rose-deep);}
+#help kbd{color:var(--mute); font-family:var(--mono);}
+#help button:focus-visible{outline:1px solid var(--rose); outline-offset:3px;}
+
+/* 頁尾品牌字（每一頁固定出現，跟草稿一致） */
+#stage::after{
+  content:"在 AI 時代如何學英文";
+  position:absolute; left:72px; bottom:58px; z-index:55;
+  font-size:13.5px; color:var(--faint); letter-spacing:.06em;
+}
+
+/* ── 投影片 ────────────────────────────────── */
+.slide{
+  position:absolute; inset:0; padding:78px 72px 104px;
+  display:flex; flex-direction:column;
+}
+.slide[hidden]{display:none;}
+.slide.mid{justify-content:center;}
+
+/* 進場：淡入 + 微上移，用 --d 排序 */
+.r{
+  opacity:0; transform:translateY(18px);
+  transition:opacity .5s ease, transform .55s cubic-bezier(.2,.72,.3,1);
+  transition-delay:var(--d,0s);
+}
+.slide.in .r{opacity:1; transform:none;}
+.slide.out .r{opacity:0; transform:translateY(-10px); transition-duration:.2s; transition-delay:0s;}
+
+.step{opacity:0; transform:translateY(14px);
+  transition:opacity .45s ease, transform .45s cubic-bezier(.2,.72,.3,1);}
+.step.on{opacity:1; transform:none;}
+
+@media (prefers-reduced-motion:reduce){
+  .r,.step,#stage.leaving{transition-duration:.01ms !important; transform:none !important;}
+}
+
+/* ── 頁首：PART 標籤 + 大標 + 品牌 + 橫線 ─────── */
+.head{margin-bottom:20px;}
+.part{
+  font-family:var(--disp); font-size:15px; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--rose-deep);
+  margin-bottom:8px;
+}
+.headrow{display:flex; align-items:baseline; justify-content:space-between; gap:30px;}
+.brand{font-family:var(--disp); font-size:18px; color:var(--mute); font-weight:400; white-space:nowrap;}
+.subtitle{font-size:24px; color:var(--rose-mid); font-weight:400; margin-top:10px;}
+.hr{height:2px; background:var(--line); margin-top:18px;}
+
+h1,h2,h3{margin:0; font-weight:900; text-wrap:balance; letter-spacing:.005em;}
+h1{font-family:var(--disp); font-size:var(--fs-h1); line-height:1.2; color:var(--ink); font-weight:700;}
+h1.cjk{font-family:var(--sans); font-weight:900; letter-spacing:.02em;}
+h2{font-size:var(--fs-h2); line-height:1.34;}
+p{margin:0; line-height:1.75;}
+
+.mega{font-family:var(--sans); font-size:var(--fs-mega); line-height:1.24; font-weight:900; color:var(--ink); letter-spacing:.02em;}
+.mega.en{font-family:var(--disp); font-weight:700; letter-spacing:-.01em;}
+.h1s{font-size:40px; line-height:1.32;}
+
+.lead{font-size:var(--fs-lead); line-height:1.75; color:var(--body); font-weight:400; max-width:34ch;}
+.lead.wide{max-width:46ch;}
+.lead b{color:var(--ink); font-weight:700;}
+.body{font-size:var(--fs-body); line-height:1.8; color:var(--body); font-weight:400;}
+.body b{color:var(--ink); font-weight:700;}
+.note{font-size:var(--fs-note); color:var(--faint); line-height:1.8;}
+.hl{color:var(--rose-deep); font-weight:700;}
+.rule{height:2px; background:var(--rose-lite); margin:24px 0; max-width:408px;}
+
+.cols{display:grid; gap:40px;}
+.c-2{grid-template-columns:1fr 1fr;}
+.c-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+.c-wide{grid-template-columns:1.05fr .95fr; gap:56px;}
+.c-media{grid-template-columns:1fr 460px; gap:60px;}
+.c-avatar{grid-template-columns:300px 1fr; gap:48px;}
+
+.stack{display:flex; flex-direction:column;}
+.g6{gap:6px;} .g8{gap:8px;} .g12{gap:12px;} .g16{gap:16px;} .g20{gap:20px;}
+.g24{gap:24px;} .g30{gap:30px;} .g40{gap:40px;}
+
+/* ── 封面 ─────────────────────────────────── */
+.cover-eyebrow{
+  font-family:var(--disp); font-size:17px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--rose-deep);
+}
+.cover-sub{font-size:23px; line-height:1.7; color:var(--mute); font-weight:400;}
+.cover-foot{
+  font-family:var(--disp); font-size:14px; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--faint);
+}
+.logo{width:300px; height:300px; border-radius:50%; overflow:hidden; background:var(--paper-2);
+  border:1px solid var(--line);}
+.logo img{width:100%; height:100%; object-fit:cover; display:block;}
+.logo img.dead{display:none;}
+
+/* ── 講者介紹 ───────────────────────────── */
+.bio{display:flex; flex-direction:column; gap:10px;}
+.bio p{font-size:19px; line-height:1.72; color:var(--body);}
+.bio p b{color:var(--ink); font-weight:700;}
+
+.svc{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.svc > div{background:var(--tint-b); border-radius:6px; padding:13px 18px 15px;}
+.svc .t{font-size:18px; font-weight:700; color:#624B50;}
+.svc .d{font-size:15px; line-height:1.6; color:var(--body); margin-top:5px;}
+
+/* ── 兩欄對照（中間一條直線） ────────────────── */
+.duo{display:grid; grid-template-columns:1fr 1px 1fr; gap:0 58px; align-items:start;}
+.duo .sep{background:var(--line); width:2px; height:100%; justify-self:center;}
+.duo .no{font-family:var(--mono); font-size:24px; font-weight:700; color:var(--rose); letter-spacing:.02em;}
+.duo h3{font-size:30px; font-weight:700; color:var(--ink); margin-top:8px;}
+.duo .en{font-family:var(--disp); font-size:13px; font-weight:600; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--faint); margin-top:8px;}
+.duo p{font-size:23px; color:var(--body); line-height:1.75; margin-top:18px; font-weight:400;}
+
+/* ── 引言轉換帶 ──────────────────────────── */
+.swap{background:var(--tint-d); border-radius:6px; padding:46px 52px;
+  display:flex; align-items:center; gap:34px;}
+.swap .old{flex:0 0 auto;}
+.swap .old .s{font-size:19px; color:var(--mute); margin-bottom:8px;}
+.swap .old .q{font-size:32px; color:var(--mute); font-weight:400;}
+.swap .arw{flex:0 0 auto; font-size:38px; color:var(--rose-mid); line-height:1;}
+.swap .new{font-size:40px; font-weight:700; color:var(--plum); line-height:1.4;}
+
+/* ── 三欄程度卡 ─────────────────────────── */
+.lvl3{display:grid; grid-template-columns:repeat(3,1fr); gap:26px; flex:1;}
+.lvl3 > div{border-radius:6px; padding:24px 26px 26px; display:flex; flex-direction:column;}
+.lvl3 > div:nth-child(1){background:var(--tint-a);}
+.lvl3 > div:nth-child(2){background:var(--tint-b);}
+.lvl3 > div:nth-child(3){background:var(--tint-c);}
+.lvl3 .lv{font-family:var(--disp); font-size:26px; font-weight:700; color:#C37F8A; letter-spacing:.02em;}
+.lvl3 .goal{font-size:26px; font-weight:700; color:var(--ink); line-height:1.4; margin-top:12px; min-height:2.8em;}
+.lvl3 .focus{font-size:16px; color:var(--rose-mid); font-weight:500; letter-spacing:.08em;
+  margin-top:10px; padding-top:16px; border-top:1px solid rgba(166,111,120,.18);}
+.lvl3 ol{margin:14px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px;}
+.lvl3 ol li{font-size:21px; color:var(--body); line-height:1.55; display:flex; gap:12px; font-weight:400;}
+.lvl3 ol li .n{font-family:var(--mono); font-size:17px; color:var(--rose-mid); flex:0 0 auto; padding-top:3px;}
+.lvl3 ol li .sub{display:block; font-size:18px; color:var(--mute); margin-top:5px; line-height:1.5;}
+
+/* ── 橫幅列（P1 / 3R / SCALE） ───────────── */
+.bands{display:flex; flex-direction:column; gap:12px; flex:1;}
+.band{border-radius:6px; padding:16px 30px; display:flex; align-items:center; gap:30px;}
+.band.a{background:var(--tint-a);} .band.b{background:var(--tint-b);} .band.c{background:var(--tint-c);}
+.band .lv{font-family:var(--disp); font-size:26px; font-weight:700; color:#C37F8A;
+  flex:0 0 108px; letter-spacing:.01em;}
+.band .method{font-size:25px; font-weight:700; color:#654D52; line-height:1.4; flex:0 0 300px;}
+.band .desc{font-size:22px; color:var(--body); line-height:1.6; flex:1; font-weight:400;}
+.band .desc .sub{display:block; color:var(--mute); font-size:20px; margin-top:5px;}
+
+/* 3R 專用：編號 + 提問 + 說明 */
+.band .no{font-family:var(--mono); font-size:23px; font-weight:700; color:#C37F8A; flex:0 0 62px;}
+.band .nm{font-size:26px; font-weight:700; color:#60494E; flex:0 0 250px; line-height:1.4;}
+.band .nm .en{display:block; font-family:var(--disp); font-size:13px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--rose-mid); margin-top:6px;}
+.band .q{font-size:25px; font-weight:700; color:#60494E; flex:0 0 330px;}
+.band .col{display:flex; flex-direction:column; gap:12px; flex:1;}
+.band .flow{font-size:22px; color:var(--body); font-weight:400;}
+.band .flow .x{color:#C37F8A; font-weight:700; font-size:25px; margin-right:10px;}
+.band .point{font-size:22px; color:var(--plum); font-weight:700;}
+
+/* SCALE 五列 */
+.scale{display:flex; flex-direction:column; gap:12px; flex:1;}
+.scale .row{border-radius:6px; padding:0 28px; height:72px; display:flex; align-items:center; gap:28px;}
+.scale .row:nth-child(odd){background:var(--tint-a);}
+.scale .row:nth-child(even){background:var(--tint-b);}
+.scale .row:last-child{background:var(--tint-c);}
+.scale .ltr{font-family:var(--disp); font-size:38px; font-weight:700; color:#C37F8A;
+  flex:0 0 72px; line-height:1;}
+.scale .word{font-family:var(--disp); font-size:27px; font-weight:600; color:#60494E; flex:0 0 300px;}
+.scale .desc{font-size:23px; color:var(--body); font-weight:400; flex:1;}
+.scale .cue{font-size:15px; color:var(--rose-mid); letter-spacing:.04em; white-space:nowrap;}
+
+/* ── 三張資源卡（中間有箭頭） ───────────────── */
+.rescards{display:grid; grid-template-columns:1fr 60px 1fr 60px 1fr; align-items:stretch;}
+.rescards .card{border-radius:6px; padding:18px 22px 20px; display:flex; flex-direction:column; gap:0;}
+.rescards > .card:nth-child(1){background:var(--tint-a);}
+.rescards > .card:nth-child(3){background:var(--tint-b);}
+.rescards > .card:nth-child(5){background:var(--tint-c);}
+.rescards .card .t{font-family:var(--disp); font-size:25px; font-weight:700; color:#624B50;}
+.rescards .card .cn{font-size:18px; color:#B07982; margin-top:6px; font-weight:500;}
+.rescards .card .ex{font-size:20px; color:#756166; line-height:1.55; margin-top:12px; font-weight:400;}
+.rescards .arw{display:grid; place-items:center; font-size:28px; color:#BD7F89;}
+
+/* ── 強調底色帶 ─────────────────────────── */
+.strip{background:var(--tint-e); border-radius:6px; padding:15px 34px; text-align:center;}
+.strip .t{font-size:26px; font-weight:700; color:var(--plum);}
+.strip.left{text-align:left;}
+.strip.soft{background:var(--tint-d);}
+
+/* ── 編號清單（P2 的六項回饋） ─────────────── */
+.numlist{display:grid; grid-template-columns:1fr 1fr; gap:22px 34px;}
+.numlist .it{font-size:26px; color:#654F54; font-weight:500; display:flex; gap:16px; align-items:baseline;}
+.numlist .it .n{font-family:var(--mono); font-size:19px; color:var(--rose-mid); font-weight:500;}
+
+/* ── 流程節點 ───────────────────────────── */
+.pipe{display:flex; align-items:stretch; gap:0; width:100%;}
+.pipe .node{
+  flex:1; background:var(--tint-a); border-radius:6px; min-height:210px;
+  padding:30px 16px; display:flex; flex-direction:column; gap:12px;
+  align-items:center; justify-content:flex-start; text-align:center;
+}
+.pipe .node:nth-child(4n+3){background:var(--tint-b);}
+.pipe .node .k{font-family:var(--disp); font-size:13px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--rose-mid);}
+.pipe .node .t{font-family:var(--disp); font-size:21px; font-weight:700; color:var(--ink);
+  line-height:1.35; min-height:2.7em; display:flex; align-items:center;}
+.pipe .node .s{font-size:16px; color:var(--mute); line-height:1.5;}
+.pipe .arw{flex:0 0 32px; display:grid; place-items:center; color:var(--rose-lite);}
+.pipe .arw svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ── 收尾回顧 ───────────────────────────── */
+.recap{display:flex; flex-direction:column; gap:0; flex:1; justify-content:center;}
+.recap .it{display:flex; gap:28px; align-items:baseline; padding:19px 4px; border-bottom:1px solid var(--line);}
+.recap .it:last-child{border-bottom:0;}
+.recap .no{font-family:var(--disp); font-size:14px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--rose-deep); flex:0 0 130px;}
+.recap .nm{font-family:var(--disp); font-size:28px; font-weight:700; color:var(--ink); flex:0 0 300px;}
+.recap .sb{font-size:21px; color:var(--body); font-weight:400;}
+
+/* ── QR ───────────────────────────────── */
+.qrcard{display:flex; flex-direction:column; align-items:center; gap:20px;}
+.qrbox{width:340px; height:340px; border-radius:14px; background:#fff; border:1px solid var(--line);
+  padding:22px; display:grid; place-items:center;}
+.qrbox img{width:100%; height:100%; object-fit:contain; display:block;}
+.qrbox img.dead{display:none;}
+.qrcard .cap{font-size:20px; color:var(--body);}
+
+/* ── 目錄頁 ─────────────────────────────── */
+.toc{display:flex; flex-direction:column; gap:0;}
+.toc a{display:flex; align-items:baseline; gap:22px; padding:10px 12px;
+  border-bottom:1px solid var(--line); text-decoration:none; color:inherit; transition:.18s; border-radius:3px;}
+.toc a:hover{background:var(--tint-a); border-bottom-color:var(--rose);}
+.toc a:focus-visible{outline:2px solid var(--rose); outline-offset:-2px;}
+.toc .no{font-family:var(--disp); font-size:12.5px; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--rose-deep); flex:0 0 116px; white-space:nowrap;}
+.toc .nm{font-size:21px; font-weight:500; line-height:1.4; color:var(--ink);}
+.toc .en{font-family:var(--disp); font-size:16px; font-weight:500; color:var(--mute); margin-left:14px;}
+.toc .mi{margin-left:auto; font-family:var(--mono); font-size:13px; color:var(--faint); flex:0 0 auto;}
+
+/* 連結 */
+a{color:var(--rose-deep); text-decoration:none; border-bottom:1px solid var(--rose-sk);}
+a:hover{border-bottom-color:var(--rose);}
+a:focus-visible{outline:2px solid var(--rose); outline-offset:3px;}
+
+template{display:none;}

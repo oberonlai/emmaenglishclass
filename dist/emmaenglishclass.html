@@ -1,0 +1,1624 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>在 AI 時代如何學英文｜Emma’s English Class</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap">
+<style>
+/* ═══════════════════════════════════════════════
+   在 AI 時代如何學英文 — Emma's English Class 簡報樣式
+   舞台固定 1280 × 720，由 deck.js 等比縮放
+   暖米白紙面 + 玫瑰粉主色，全頁一致的內容版型（不做章節首頁）
+   ═══════════════════════════════════════════════ */
+
+:root{
+  /* 紙面 */
+  --paper:   #FBF7F3;
+  --paper-2: #F6EFEA;
+
+  /* 玫瑰色階（取自簡報草稿） */
+  --tint-a:  #F5E6E9;
+  --tint-b:  #F8EEEB;
+  --tint-c:  #F1E0E4;
+  --tint-d:  #F0DDE0;
+  --tint-e:  #EED7DB;
+
+  /* 文字 */
+  --ink:     #5C4549;   /* 標題 */
+  --ink-2:   #4A3639;   /* 更重的標題 */
+  --body:    #705D60;   /* 內文 */
+  --mute:    #92767B;   /* 次文 */
+  --faint:   #B69EA2;   /* 標註 */
+  --plum:    #684A50;   /* 重點句 */
+
+  /* 主色 */
+  --rose:      #C98E97;
+  --rose-deep: #A66F78;
+  --rose-mid:  #B27D86;
+  --rose-lite: #D9AAB2;
+  --rose-sk:   rgba(201,142,151,.14);
+
+  --line:   #E7CDD1;
+  --line-2: rgba(92,69,73,.10);
+
+  --sans: "Archivo", "Noto Sans TC", -apple-system, "PingFang TC", sans-serif;
+  --disp: "Archivo", "Noto Sans TC", -apple-system, "PingFang TC", sans-serif;
+  --mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+
+  /* 字級（1280×720 舞台內的絕對值，一律偏大） */
+  --fs-mega: 76px;
+  --fs-h1:   50px;
+  --fs-h2:   34px;
+  --fs-lead: 27px;
+  --fs-body: 23px;
+  --fs-note: 17px;
+  --fs-eye:  15px;
+}
+
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+#viewport{
+  position:fixed; inset:0; overflow:hidden;
+  background:
+    radial-gradient(100% 74% at 88% 2%, rgba(201,142,151,.10), transparent 62%),
+    radial-gradient(86% 66% at 2% 100%, rgba(182,158,162,.10), transparent 62%),
+    var(--paper);
+}
+#stage{
+  position:absolute; top:0; left:0;
+  width:1280px; height:720px;
+  transform-origin:top left;
+}
+#stage.leaving{opacity:0; transition:opacity .26s ease;}
+
+/* ── 版面骨架：頂部色帶 + 頁尾 ───────────────── */
+/* 草稿每一頁都有一條 10px 的玫瑰色頂帶，這裡用 .hull 的位置畫出來 */
+.hull{position:absolute; left:0; right:0; top:0; height:10px; background:var(--rose); z-index:40; pointer-events:none;}
+
+.eyebrow-slot{
+  position:absolute; left:72px; top:46px; z-index:60;
+  font-family:var(--disp); font-size:13.5px; font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--rose-deep);
+  display:flex; align-items:center; gap:9px; white-space:nowrap;
+}
+.eyebrow-slot .u{color:var(--rose-deep);}
+.eyebrow-slot span+span{color:var(--faint);}
+
+#pageno{
+  position:absolute; right:72px; bottom:36px; z-index:60;
+  font-family:var(--mono); font-size:13px; letter-spacing:.12em; color:var(--faint);
+  font-variant-numeric:tabular-nums;
+}
+#railwrap{position:absolute; left:0; right:0; top:0; height:10px; z-index:59;}
+#rail{height:10px; width:0; background:var(--rose-deep);
+  transition:width .5s cubic-bezier(.2,.7,.3,1);}
+
+#nav{position:absolute; right:72px; bottom:64px; z-index:60; display:flex; gap:6px;}
+#nav button{
+  width:32px;height:32px; background:transparent; border:1px solid var(--line);
+  color:var(--faint); border-radius:3px; cursor:pointer; display:grid; place-items:center; transition:.2s;
+}
+#nav button:hover{color:var(--rose-deep); border-color:var(--rose);}
+#nav button:focus-visible{outline:2px solid var(--rose); outline-offset:2px;}
+#nav svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+#help{
+  position:absolute; left:72px; bottom:36px; z-index:60;
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; color:var(--faint);
+  display:flex; align-items:center; gap:20px;
+}
+#help button{
+  font:inherit; letter-spacing:inherit; color:inherit;
+  background:transparent; border:0; padding:3px 2px; margin:0;
+  cursor:pointer; white-space:nowrap; transition:color .18s ease;
+}
+#help button:hover{color:var(--rose-deep);}
+#help kbd{color:var(--mute); font-family:var(--mono);}
+#help button:focus-visible{outline:1px solid var(--rose); outline-offset:3px;}
+
+/* 頁尾品牌字（每一頁固定出現，跟草稿一致） */
+#stage::after{
+  content:"在 AI 時代如何學英文";
+  position:absolute; left:72px; bottom:58px; z-index:55;
+  font-size:13.5px; color:var(--faint); letter-spacing:.06em;
+}
+
+/* ── 投影片 ────────────────────────────────── */
+.slide{
+  position:absolute; inset:0; padding:78px 72px 104px;
+  display:flex; flex-direction:column;
+}
+.slide[hidden]{display:none;}
+.slide.mid{justify-content:center;}
+
+/* 進場：淡入 + 微上移，用 --d 排序 */
+.r{
+  opacity:0; transform:translateY(18px);
+  transition:opacity .5s ease, transform .55s cubic-bezier(.2,.72,.3,1);
+  transition-delay:var(--d,0s);
+}
+.slide.in .r{opacity:1; transform:none;}
+.slide.out .r{opacity:0; transform:translateY(-10px); transition-duration:.2s; transition-delay:0s;}
+
+.step{opacity:0; transform:translateY(14px);
+  transition:opacity .45s ease, transform .45s cubic-bezier(.2,.72,.3,1);}
+.step.on{opacity:1; transform:none;}
+
+@media (prefers-reduced-motion:reduce){
+  .r,.step,#stage.leaving{transition-duration:.01ms !important; transform:none !important;}
+}
+
+/* ── 頁首：PART 標籤 + 大標 + 品牌 + 橫線 ─────── */
+.head{margin-bottom:20px;}
+.part{
+  font-family:var(--disp); font-size:15px; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--rose-deep);
+  margin-bottom:8px;
+}
+.headrow{display:flex; align-items:baseline; justify-content:space-between; gap:30px;}
+.brand{font-family:var(--disp); font-size:18px; color:var(--mute); font-weight:400; white-space:nowrap;}
+.subtitle{font-size:24px; color:var(--rose-mid); font-weight:400; margin-top:10px;}
+.hr{height:2px; background:var(--line); margin-top:18px;}
+
+h1,h2,h3{margin:0; font-weight:900; text-wrap:balance; letter-spacing:.005em;}
+h1{font-family:var(--disp); font-size:var(--fs-h1); line-height:1.2; color:var(--ink); font-weight:700;}
+h1.cjk{font-family:var(--sans); font-weight:900; letter-spacing:.02em;}
+h2{font-size:var(--fs-h2); line-height:1.34;}
+p{margin:0; line-height:1.75;}
+
+.mega{font-family:var(--sans); font-size:var(--fs-mega); line-height:1.24; font-weight:900; color:var(--ink); letter-spacing:.02em;}
+.mega.en{font-family:var(--disp); font-weight:700; letter-spacing:-.01em;}
+.h1s{font-size:40px; line-height:1.32;}
+
+.lead{font-size:var(--fs-lead); line-height:1.75; color:var(--body); font-weight:400; max-width:34ch;}
+.lead.wide{max-width:46ch;}
+.lead b{color:var(--ink); font-weight:700;}
+.body{font-size:var(--fs-body); line-height:1.8; color:var(--body); font-weight:400;}
+.body b{color:var(--ink); font-weight:700;}
+.note{font-size:var(--fs-note); color:var(--faint); line-height:1.8;}
+.hl{color:var(--rose-deep); font-weight:700;}
+.rule{height:2px; background:var(--rose-lite); margin:24px 0; max-width:408px;}
+
+.cols{display:grid; gap:40px;}
+.c-2{grid-template-columns:1fr 1fr;}
+.c-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+.c-wide{grid-template-columns:1.05fr .95fr; gap:56px;}
+.c-media{grid-template-columns:1fr 460px; gap:60px;}
+.c-avatar{grid-template-columns:300px 1fr; gap:48px;}
+
+.stack{display:flex; flex-direction:column;}
+.g6{gap:6px;} .g8{gap:8px;} .g12{gap:12px;} .g16{gap:16px;} .g20{gap:20px;}
+.g24{gap:24px;} .g30{gap:30px;} .g40{gap:40px;}
+
+/* ── 封面 ─────────────────────────────────── */
+.cover-eyebrow{
+  font-family:var(--disp); font-size:17px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--rose-deep);
+}
+.cover-sub{font-size:23px; line-height:1.7; color:var(--mute); font-weight:400;}
+.cover-foot{
+  font-family:var(--disp); font-size:14px; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--faint);
+}
+.logo{width:300px; height:300px; border-radius:50%; overflow:hidden; background:var(--paper-2);
+  border:1px solid var(--line);}
+.logo img{width:100%; height:100%; object-fit:cover; display:block;}
+.logo img.dead{display:none;}
+
+/* ── 講者介紹 ───────────────────────────── */
+.bio{display:flex; flex-direction:column; gap:10px;}
+.bio p{font-size:19px; line-height:1.72; color:var(--body);}
+.bio p b{color:var(--ink); font-weight:700;}
+
+.svc{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.svc > div{background:var(--tint-b); border-radius:6px; padding:13px 18px 15px;}
+.svc .t{font-size:18px; font-weight:700; color:#624B50;}
+.svc .d{font-size:15px; line-height:1.6; color:var(--body); margin-top:5px;}
+
+/* ── 兩欄對照（中間一條直線） ────────────────── */
+.duo{display:grid; grid-template-columns:1fr 1px 1fr; gap:0 58px; align-items:start;}
+.duo .sep{background:var(--line); width:2px; height:100%; justify-self:center;}
+.duo .no{font-family:var(--mono); font-size:24px; font-weight:700; color:var(--rose); letter-spacing:.02em;}
+.duo h3{font-size:30px; font-weight:700; color:var(--ink); margin-top:8px;}
+.duo .en{font-family:var(--disp); font-size:13px; font-weight:600; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--faint); margin-top:8px;}
+.duo p{font-size:23px; color:var(--body); line-height:1.75; margin-top:18px; font-weight:400;}
+
+/* ── 引言轉換帶 ──────────────────────────── */
+.swap{background:var(--tint-d); border-radius:6px; padding:46px 52px;
+  display:flex; align-items:center; gap:34px;}
+.swap .old{flex:0 0 auto;}
+.swap .old .s{font-size:19px; color:var(--mute); margin-bottom:8px;}
+.swap .old .q{font-size:32px; color:var(--mute); font-weight:400;}
+.swap .arw{flex:0 0 auto; font-size:38px; color:var(--rose-mid); line-height:1;}
+.swap .new{font-size:40px; font-weight:700; color:var(--plum); line-height:1.4;}
+
+/* ── 三欄程度卡 ─────────────────────────── */
+.lvl3{display:grid; grid-template-columns:repeat(3,1fr); gap:26px; flex:1;}
+.lvl3 > div{border-radius:6px; padding:24px 26px 26px; display:flex; flex-direction:column;}
+.lvl3 > div:nth-child(1){background:var(--tint-a);}
+.lvl3 > div:nth-child(2){background:var(--tint-b);}
+.lvl3 > div:nth-child(3){background:var(--tint-c);}
+.lvl3 .lv{font-family:var(--disp); font-size:26px; font-weight:700; color:#C37F8A; letter-spacing:.02em;}
+.lvl3 .goal{font-size:26px; font-weight:700; color:var(--ink); line-height:1.4; margin-top:12px; min-height:2.8em;}
+.lvl3 .focus{font-size:16px; color:var(--rose-mid); font-weight:500; letter-spacing:.08em;
+  margin-top:10px; padding-top:16px; border-top:1px solid rgba(166,111,120,.18);}
+.lvl3 ol{margin:14px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px;}
+.lvl3 ol li{font-size:21px; color:var(--body); line-height:1.55; display:flex; gap:12px; font-weight:400;}
+.lvl3 ol li .n{font-family:var(--mono); font-size:17px; color:var(--rose-mid); flex:0 0 auto; padding-top:3px;}
+.lvl3 ol li .sub{display:block; font-size:18px; color:var(--mute); margin-top:5px; line-height:1.5;}
+
+/* ── 橫幅列（P1 / 3R / SCALE） ───────────── */
+.bands{display:flex; flex-direction:column; gap:12px; flex:1;}
+.band{border-radius:6px; padding:16px 30px; display:flex; align-items:center; gap:30px;}
+.band.a{background:var(--tint-a);} .band.b{background:var(--tint-b);} .band.c{background:var(--tint-c);}
+.band .lv{font-family:var(--disp); font-size:26px; font-weight:700; color:#C37F8A;
+  flex:0 0 108px; letter-spacing:.01em;}
+.band .method{font-size:25px; font-weight:700; color:#654D52; line-height:1.4; flex:0 0 300px;}
+.band .desc{font-size:22px; color:var(--body); line-height:1.6; flex:1; font-weight:400;}
+.band .desc .sub{display:block; color:var(--mute); font-size:20px; margin-top:5px;}
+
+/* 3R 專用：編號 + 提問 + 說明 */
+.band .no{font-family:var(--mono); font-size:23px; font-weight:700; color:#C37F8A; flex:0 0 62px;}
+.band .nm{font-size:26px; font-weight:700; color:#60494E; flex:0 0 250px; line-height:1.4;}
+.band .nm .en{display:block; font-family:var(--disp); font-size:13px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--rose-mid); margin-top:6px;}
+.band .q{font-size:25px; font-weight:700; color:#60494E; flex:0 0 330px;}
+.band .col{display:flex; flex-direction:column; gap:12px; flex:1;}
+.band .flow{font-size:22px; color:var(--body); font-weight:400;}
+.band .flow .x{color:#C37F8A; font-weight:700; font-size:25px; margin-right:10px;}
+.band .point{font-size:22px; color:var(--plum); font-weight:700;}
+
+/* SCALE 五列 */
+.scale{display:flex; flex-direction:column; gap:12px; flex:1;}
+.scale .row{border-radius:6px; padding:0 28px; height:72px; display:flex; align-items:center; gap:28px;}
+.scale .row:nth-child(odd){background:var(--tint-a);}
+.scale .row:nth-child(even){background:var(--tint-b);}
+.scale .row:last-child{background:var(--tint-c);}
+.scale .ltr{font-family:var(--disp); font-size:38px; font-weight:700; color:#C37F8A;
+  flex:0 0 72px; line-height:1;}
+.scale .word{font-family:var(--disp); font-size:27px; font-weight:600; color:#60494E; flex:0 0 300px;}
+.scale .desc{font-size:23px; color:var(--body); font-weight:400; flex:1;}
+.scale .cue{font-size:15px; color:var(--rose-mid); letter-spacing:.04em; white-space:nowrap;}
+
+/* ── 三張資源卡（中間有箭頭） ───────────────── */
+.rescards{display:grid; grid-template-columns:1fr 60px 1fr 60px 1fr; align-items:stretch;}
+.rescards .card{border-radius:6px; padding:18px 22px 20px; display:flex; flex-direction:column; gap:0;}
+.rescards > .card:nth-child(1){background:var(--tint-a);}
+.rescards > .card:nth-child(3){background:var(--tint-b);}
+.rescards > .card:nth-child(5){background:var(--tint-c);}
+.rescards .card .t{font-family:var(--disp); font-size:25px; font-weight:700; color:#624B50;}
+.rescards .card .cn{font-size:18px; color:#B07982; margin-top:6px; font-weight:500;}
+.rescards .card .ex{font-size:20px; color:#756166; line-height:1.55; margin-top:12px; font-weight:400;}
+.rescards .arw{display:grid; place-items:center; font-size:28px; color:#BD7F89;}
+
+/* ── 強調底色帶 ─────────────────────────── */
+.strip{background:var(--tint-e); border-radius:6px; padding:15px 34px; text-align:center;}
+.strip .t{font-size:26px; font-weight:700; color:var(--plum);}
+.strip.left{text-align:left;}
+.strip.soft{background:var(--tint-d);}
+
+/* ── 編號清單（P2 的六項回饋） ─────────────── */
+.numlist{display:grid; grid-template-columns:1fr 1fr; gap:22px 34px;}
+.numlist .it{font-size:26px; color:#654F54; font-weight:500; display:flex; gap:16px; align-items:baseline;}
+.numlist .it .n{font-family:var(--mono); font-size:19px; color:var(--rose-mid); font-weight:500;}
+
+/* ── 流程節點 ───────────────────────────── */
+.pipe{display:flex; align-items:stretch; gap:0; width:100%;}
+.pipe .node{
+  flex:1; background:var(--tint-a); border-radius:6px; min-height:210px;
+  padding:30px 16px; display:flex; flex-direction:column; gap:12px;
+  align-items:center; justify-content:flex-start; text-align:center;
+}
+.pipe .node:nth-child(4n+3){background:var(--tint-b);}
+.pipe .node .k{font-family:var(--disp); font-size:13px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--rose-mid);}
+.pipe .node .t{font-family:var(--disp); font-size:21px; font-weight:700; color:var(--ink);
+  line-height:1.35; min-height:2.7em; display:flex; align-items:center;}
+.pipe .node .s{font-size:16px; color:var(--mute); line-height:1.5;}
+.pipe .arw{flex:0 0 32px; display:grid; place-items:center; color:var(--rose-lite);}
+.pipe .arw svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ── 收尾回顧 ───────────────────────────── */
+.recap{display:flex; flex-direction:column; gap:0; flex:1; justify-content:center;}
+.recap .it{display:flex; gap:28px; align-items:baseline; padding:19px 4px; border-bottom:1px solid var(--line);}
+.recap .it:last-child{border-bottom:0;}
+.recap .no{font-family:var(--disp); font-size:14px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--rose-deep); flex:0 0 130px;}
+.recap .nm{font-family:var(--disp); font-size:28px; font-weight:700; color:var(--ink); flex:0 0 300px;}
+.recap .sb{font-size:21px; color:var(--body); font-weight:400;}
+
+/* ── QR ───────────────────────────────── */
+.qrcard{display:flex; flex-direction:column; align-items:center; gap:20px;}
+.qrbox{width:340px; height:340px; border-radius:14px; background:#fff; border:1px solid var(--line);
+  padding:22px; display:grid; place-items:center;}
+.qrbox img{width:100%; height:100%; object-fit:contain; display:block;}
+.qrbox img.dead{display:none;}
+.qrcard .cap{font-size:20px; color:var(--body);}
+
+/* ── 目錄頁 ─────────────────────────────── */
+.toc{display:flex; flex-direction:column; gap:0;}
+.toc a{display:flex; align-items:baseline; gap:22px; padding:10px 12px;
+  border-bottom:1px solid var(--line); text-decoration:none; color:inherit; transition:.18s; border-radius:3px;}
+.toc a:hover{background:var(--tint-a); border-bottom-color:var(--rose);}
+.toc a:focus-visible{outline:2px solid var(--rose); outline-offset:-2px;}
+.toc .no{font-family:var(--disp); font-size:12.5px; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--rose-deep); flex:0 0 116px; white-space:nowrap;}
+.toc .nm{font-size:21px; font-weight:500; line-height:1.4; color:var(--ink);}
+.toc .en{font-family:var(--disp); font-size:16px; font-weight:500; color:var(--mute); margin-left:14px;}
+.toc .mi{margin-left:auto; font-family:var(--mono); font-size:13px; color:var(--faint); flex:0 0 auto;}
+
+/* 連結 */
+a{color:var(--rose-deep); text-decoration:none; border-bottom:1px solid var(--rose-sk);}
+a:hover{border-bottom-color:var(--rose);}
+a:focus-visible{outline:2px solid var(--rose); outline-offset:3px;}
+
+template{display:none;}
+</style>
+</head>
+<body data-unit-name="在 AI 時代如何學英文" data-home="#toc">
+<div id="viewport"><div id="stage">
+
+<section id="toc" class="slide" data-sec="Emma’s English Class">
+  <div class="head">
+    <div class="headrow">
+      <h1 class="cjk r" style="font-size:42px">在 AI 時代如何學英文</h1>
+      <div class="brand r" style="--d:.04s">7 個單元 · 13 張</div>
+    </div>
+    <p class="subtitle r" style="--d:.08s">點任一單元直接跳過去，或按 <b style="color:var(--rose-deep)">→</b> 從封面開始。</p>
+    <div class="hr r" style="--d:.12s"></div>
+  </div>
+
+  <div class="toc r" style="--d:.2s">
+    <a href="#" data-goto="1"><span class="no">Opening</span><span class="nm">開場<span class="en">封面 · 關於 Emma · 今天的五段路</span></span><span class="mi">3 張</span></a>
+    <a href="#" data-goto="4"><span class="no">Part One</span><span class="nm">心態<span class="en">Mindset</span></span><span class="mi">2 張</span></a>
+    <a href="#" data-goto="6"><span class="no">Part Two</span><span class="nm">具體目標<span class="en">Specific Goal</span></span><span class="mi">1 張</span></a>
+    <a href="#" data-goto="7"><span class="no">Part Three</span><span class="nm">AI 的三個角色<span class="en">AI–3P</span></span><span class="mi">3 張</span></a>
+    <a href="#" data-goto="10"><span class="no">Part Four</span><span class="nm">複習<span class="en">Review–3R</span></span><span class="mi">1 張</span></a>
+    <a href="#" data-goto="11"><span class="no">Part Five</span><span class="nm">學習習慣<span class="en">Learning Habit — SCALE</span></span><span class="mi">1 張</span></a>
+    <a href="#" data-goto="12"><span class="no">Closing</span><span class="nm">收尾<span class="en">Recap ＋ Thank you</span></span><span class="mi">2 張</span></a>
+  </div>
+</section>
+
+<section class="slide mid" data-sec="Emma’s English Class">
+  <div class="cols c-media" style="align-items:center">
+    <div class="stack">
+      <h1 class="mega cjk r" style="--d:.06s">在 AI 時代<br>如何學英文</h1>
+      <div class="rule r" style="--d:.16s"></div>
+      <p class="cover-sub r" style="--d:.22s">Mindset · Specific Goal · AI–3P<br>Review–3R · Learning Habit</p>
+      <div class="cover-foot r" style="--d:.32s; margin-top:44px">English Learning in the AI Era</div>
+    </div>
+
+    <div class="r" style="--d:.4s; display:grid; place-items:center">
+      <div class="logo" style="width:330px; height:330px">
+        <img src="images/logo.png" alt="Emma’s English Class 品牌識別">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-sec="About Emma">
+  <div class="head">
+    <div class="headrow">
+      <h1 class="r">Hi, I’m Emma</h1>
+      <div class="brand r" style="--d:.04s">justgirl.me</div>
+    </div>
+    <p class="subtitle r" style="--d:.08s">英文老師 · 文學女孩 · 閱讀推廣者</p>
+    <div class="hr r" style="--d:.12s"></div>
+  </div>
+
+  <div class="cols c-avatar" style="align-items:start; margin-top:10px">
+    <div class="r" style="--d:.18s">
+      <div class="logo">
+        <img src="images/logo.png" alt="Emma’s English Class 品牌識別">
+      </div>
+    </div>
+
+    <div class="stack g16">
+      <div class="bio r" style="--d:.24s">
+        <p>擁有<b>英語教學碩士</b>學位，累積將近<b>二十年</b>的英語教學經驗，教過的學生從 6 歲到 60 歲。</p>
+        <p>除了教英文，我也非常熱愛學習英文——到現在每天都還在持續精進。</p>
+        <p>因為親身走過學習路上的挫折與自我懷疑，我更想幫你避開常見的陷阱，把力氣花在真正能帶來進步的事情上。</p>
+      </div>
+
+      <div class="svc r" style="--d:.34s">
+        <div><div class="t">一對一 ／ 團體課程</div><div class="d">生活會話、旅遊英語、基礎文法，線上與實體皆可。</div></div>
+        <div><div class="t">英文學習顧問</div><div class="d">帶你找到適合的教材與方法，制定真正做得到的計畫。</div></div>
+        <div><div class="t">iCARE 英文學習陪跑</div><div class="d">專為成人設計的陪跑系統，在意你是否真的進步。</div></div>
+        <div><div class="t">線上英文學習健檢</div><div class="d">60 分鐘找出真正卡住的原因，讓學習更有效率。</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-sec="Today’s Route">
+  <div class="head">
+    <div class="headrow">
+      <h1 class="r">今天的五段路</h1>
+      <div class="brand r" style="--d:.04s">Emma’s English Class</div>
+    </div>
+    <p class="subtitle r" style="--d:.08s">從心態出發，走到可以每天執行的學習習慣</p>
+    <div class="hr r" style="--d:.12s"></div>
+  </div>
+
+  <div class="r" style="--d:.2s; display:flex; align-items:center; flex:1">
+    <div class="pipe" style="width:100%">
+      <div class="node"><div class="k">Part One</div><div class="t">Mindset</div><div class="s">身分認同<br>自我憐憫</div></div>
+      <div class="arw"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+      <div class="node"><div class="k">Part Two</div><div class="t">Specific<br>Goal</div><div class="s">依程度<br>設定目標</div></div>
+      <div class="arw"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+      <div class="node"><div class="k">Part Three</div><div class="t">AI–3P</div><div class="s">練習・回饋<br>語言資源</div></div>
+      <div class="arw"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+      <div class="node"><div class="k">Part Four</div><div class="t">Review–3R</div><div class="s">回想・提取<br>變化式重複</div></div>
+      <div class="arw"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+      <div class="node"><div class="k">Part Five</div><div class="t">Learning<br>Habit</div><div class="s">SCALE<br>五個原則</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-sec="Part One · Mindset">
+  <div class="head">
+    <div class="headrow">
+      <h1 class="r">Mindset</h1>
+      <div class="brand r" style="--d:.04s">Emma’s English Class</div>
+    </div>
+    <div class="hr r" style="--d:.1s"></div>
+  </div>
+
+  <div class="duo r" style="--d:.18s; margin:auto 0">
+    <div>
+      <div class="no">01</div>
+      <h3>身分認同</h3>
+      <div class="en">Identity</div>
+      <p>專注於「你想成為什麼樣的人」，<br>才能從根本改變你的行為。</p>
+    </div>
+    <div class="sep"></div>
+    <div>
+      <div class="no">02</div>
+      <h3>自我憐憫</h3>
+      <div class="en">Self-Compassion</div>
+      <p>Don’t be so hard on yourself.<br>Stop apologizing for your English.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-sec="Part One · Mindset">
+  <div class="head">
+    <div class="headrow">
+      <h1 class="r">Mindset</h1>
+      <div class="brand r" style="--d:.04s">Emma’s English Class</div>
+    </div>
+    <div class="hr r" style="--d:.1s"></div>
+  </div>
+
+  <div style="flex:1; display:grid; place-items:center">
+    <div class="swap r" style="--d:.2s; width:100%">
+      <div class="old">
+        <div class="s">不要只想著</div>
+        <div class="q">「我要學英文。」</div>
+      </div>
+      <div class="arw">→</div>
+      <div class="new">「我是一個英文使用者。」</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-sec="Part Two · Specific Goal">
+  <div class="head">
+    <div class="headrow">
+      <h1 class="r">Specific Goal</h1>
+      <div class="brand r" style="--d:.04s">Emma’s English Class</div>
+    </div>
+    <div class="hr r" style="--d:.1s"></div>
+  </div>
+
+  <div class="lvl3 r" style="--d:.18s; margin-top:14px">
+    <div>
+      <div class="lv">A1</div>
+      <div class="goal">建立開口自信與勇氣</div>
+      <div class="focus">學習重點</div>
+      <ol>
+        <li><span class="n">1</span><span>發音</span></li>
+        <li><span class="n">2</span><span>對話跟讀</span></li>
+        <li><span class="n">3</span><span>3–4 個真實情境
+          <span class="sub">Talk about yourself／Daily routine</span></span></li>
+      </ol>
+    </div>
+    <div>
+      <div class="lv">A2–B1</div>
+      <div class="goal">紮穩基礎</div>
+      <div class="focus">學習重點</div>
+      <ol>
+        <li><span class="n">1</span><span>培養 Small Talk
+          <span class="sub">天氣・餐廳・週末・興趣</span></span></li>
+        <li><span class="n">2</span><span>文法糾正</span></li>
+      </ol>
+    </div>
+    <div>
+      <div class="lv">B2+</div>
+      <div class="goal">正確度 × 流暢度<br>× 話題廣度</div>
+      <div class="focus">學習重點</div>
+      <ol>
+        <li><span class="n">1</span><span>3 秒內開始
+          <span class="sub">15 秒 → 30 秒 → 1 分鐘</span></span></li>
+        <li><span class="n">2</span><span>AI 回饋 → 修正
+          <span class="sub">背下自然表達</span></span></li>
+        <li><span class="n">3</span><span>Free Talk × Big Talk</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-sec="Part Three · AI–3P">
+  <div class="head">
+    <div class="headrow">
+      <h1 class="r">P1 ｜ Practice</h1>
+      <div class="brand r" style="--d:.04s">Emma’s English Class</div>
+    </div>
+    <p class="subtitle r" style="--d:.08s">讓 AI 陪你做 Controlled Practice</p>
+    <div class="hr r" style="--d:.12s"></div>
+  </div>
+
+  <div class="bands r" style="--d:.2s; margin-top:14px">
+    <div class="band a">
+      <div class="lv">A1</div>
+      <div class="method">Repetition<br>+ Substitution</div>
+      <div class="desc">模仿、替換、自動化
+        <span class="sub">熟悉常用句，再替換字詞，讓句型內化。</span></div>
+    </div>
+    <div class="band b">
+      <div class="lv">A2–B1</div>
+      <div class="method">Expansion<br>+ Transformation</div>
+      <div class="desc">Expansion：AI 一次提供一個 cue（When?　Where?　Why?）
+        <span class="sub">Transformation：改變時態與型態</span></div>
+    </div>
+    <div class="band c">
+      <div class="lv">B2+</div>
+      <div class="method">Summarization<br>+ Paraphrasing</div>
+      <div class="desc">閱讀短文後濃縮重點
+        <span class="sub">用自己的方式重新表達 AI 提供的句子。</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-sec="Part Three · AI–3P">
+  <div class="head">
+    <div class="headrow">
+      <h1 class="r">P2 ｜ Provide Feedback</h1>
+      <div class="brand r" style="--d:.04s">Emma’s English Class</div>
+    </div>
+    <p class="subtitle r" style="--d:.08s">讓 AI 告訴你怎麼改</p>
+    <div class="hr r" style="--d:.12s"></div>
+  </div>
+
+  <div class="duo" style="margin-top:34px; flex:1; align-items:stretch">
+    <div class="stack" style="justify-content:center">
+      <div class="r" style="--d:.18s; font-size:21px; color:var(--rose-mid); font-weight:500">自學最大的困難之一</div>
+      <h2 class="r" style="--d:.24s; font-size:44px; color:#61494E; margin-top:16px; line-height:1.35">不知道自己說得<br>對不對。</h2>
+      <p class="lead r" style="--d:.32s; margin-top:34px">AI 能在每次輸出後，<br>立刻告訴你怎麼調整。</p>
+    </div>
+    <div class="sep r" style="--d:.2s"></div>
+    <div class="stack" style="justify-content:center">
+      <div class="r" style="--d:.26s; font-size:23px; color:var(--rose-mid); font-weight:700">即時回饋</div>
+      <div class="numlist r" style="--d:.34s; margin-top:26px">
+        <div class="it"><span class="n">01</span>Grammar</div>
+        <div class="it"><span class="n">04</span>Fluency</div>
+        <div class="it"><span class="n">02</span>Word choice</div>
+        <div class="it"><span class="n">05</span>Pronunciation</div>
+        <div class="it"><span class="n">03</span>Naturalness</div>
+        <div class="it"><span class="n">06</span>Organization</div>
+      </div>
+      <div class="strip r" style="--d:.44s; margin-top:34px">
+        <div class="t">輸出 → 回饋 → 修正 → 再說一次</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-sec="Part Three · AI–3P">
+  <div class="head">
+    <div class="headrow">
+      <h1 class="r" style="font-size:44px">P3 ｜ Provide Language Resources</h1>
+      <div class="brand r" style="--d:.04s">Emma’s English Class</div>
+    </div>
+    <p class="subtitle r" style="--d:.08s">提供說英文需要的材料</p>
+    <div class="hr r" style="--d:.12s"></div>
+  </div>
+
+  <h2 class="r" style="--d:.18s; font-size:27px; color:#60494E; line-height:1.45; margin-top:10px">
+    很多人不是沒有想法，<br>而是缺少可以立即取出的英文。</h2>
+
+  <p class="r" style="--d:.26s; font-size:21px; color:var(--mute); margin-top:10px">
+    AI 可以依照程度、主題與情境，提供三類 Language Resources</p>
+
+  <div class="rescards r" style="--d:.34s; margin-top:10px">
+    <div class="card">
+      <div class="t">Collocations</div>
+      <div class="cn">搭配詞</div>
+      <div class="ex">make a decision<br>不只背單字</div>
+    </div>
+    <div class="arw">→</div>
+    <div class="card">
+      <div class="t">Chunks</div>
+      <div class="cn">語塊</div>
+      <div class="ex">From my<br>perspective…</div>
+    </div>
+    <div class="arw">→</div>
+    <div class="card">
+      <div class="t">Frameworks</div>
+      <div class="cn">組織答案</div>
+      <div class="ex">Opinion → Reason<br>→ Example → Conclusion</div>
+    </div>
+  </div>
+
+  <div class="strip r" style="--d:.44s; margin-top:10px; max-width:820px; align-self:center; width:100%">
+    <div class="t">建立可以即時取用的口說資源</div>
+  </div>
+</section>
+
+<section class="slide" data-sec="Part Four · Review–3R">
+  <div class="head">
+    <div class="headrow">
+      <h1 class="r">Review–3R</h1>
+      <div class="brand r" style="--d:.04s">Emma’s English Class</div>
+    </div>
+    <p class="subtitle r" style="--d:.08s">Recall　→　Retrieve　→　Repeat with Variation</p>
+    <div class="hr r" style="--d:.12s"></div>
+  </div>
+
+  <div class="bands r" style="--d:.2s; margin-top:8px">
+    <div class="band a">
+      <div class="no">01</div>
+      <div class="nm">回想 Recall</div>
+      <div class="q">我還記得嗎？</div>
+      <div class="desc">不看答案，自己想。</div>
+    </div>
+
+    <div class="band b" style="align-items:flex-start">
+      <div class="no" style="padding-top:2px">02</div>
+      <div class="nm" style="padding-top:2px">提取 Retrieve</div>
+      <div class="col">
+        <div class="q" style="flex:none">需要時，我說得出來嗎？</div>
+        <div class="flow"><span class="x">×</span>想中文 → 找英文 → 想文法 → 組成句子</div>
+        <div class="point">問題往往不是不會，而是提取速度。</div>
+      </div>
+    </div>
+
+    <div class="band c" style="align-items:flex-start">
+      <div class="no" style="padding-top:2px">03</div>
+      <div class="nm">變化式重複<span class="en">Repeat with Variation</span></div>
+      <div class="col">
+        <div class="q" style="flex:none">換個情境還會不會？</div>
+        <div class="flow">提取　→　調整　→　產出</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-sec="Part Five · Learning Habit">
+  <div class="head">
+    <div class="headrow">
+      <h1 class="r">Learning Habit — SCALE</h1>
+      <div class="brand r" style="--d:.04s">Emma’s English Class</div>
+    </div>
+    <div class="hr r" style="--d:.1s"></div>
+  </div>
+
+  <div class="scale r" style="--d:.18s; margin-top:12px">
+    <div class="row">
+      <div class="ltr">S</div>
+      <div class="word">Specific</div>
+      <div class="desc">學習動作明確具體</div>
+      <div class="cue">Where · When · How · What</div>
+    </div>
+    <div class="row">
+      <div class="ltr">C</div>
+      <div class="word">Consistency</div>
+      <div class="desc">建立固定且可持續的學習頻率</div>
+    </div>
+    <div class="row">
+      <div class="ltr">A</div>
+      <div class="word">Achievable</div>
+      <div class="desc">設定合理且可達成的小目標</div>
+    </div>
+    <div class="row">
+      <div class="ltr">L</div>
+      <div class="word">Low Friction</div>
+      <div class="desc">降低學習阻力，讓你更容易開始</div>
+    </div>
+    <div class="row">
+      <div class="ltr">E</div>
+      <div class="word">Emergency Plan</div>
+      <div class="desc">設計備案計畫，避免中斷後完全放棄</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-sec="Recap">
+  <div class="head">
+    <div class="headrow">
+      <h1 class="r">今天的五段路</h1>
+      <div class="brand r" style="--d:.04s">Emma’s English Class</div>
+    </div>
+    <div class="hr r" style="--d:.1s"></div>
+  </div>
+
+  <div class="recap r" style="--d:.18s">
+    <div class="it"><div class="no">Part One</div><div class="nm">Mindset</div>
+      <div class="sb">身分認同 × 自我憐憫 —— 我是一個英文使用者。</div></div>
+    <div class="it"><div class="no">Part Two</div><div class="nm">Specific Goal</div>
+      <div class="sb">A1 開口自信／A2–B1 紮穩基礎／B2+ 正確度 × 流暢度 × 話題廣度</div></div>
+    <div class="it"><div class="no">Part Three</div><div class="nm">AI–3P</div>
+      <div class="sb">Practice ／ Provide Feedback ／ Provide Language Resources</div></div>
+    <div class="it"><div class="no">Part Four</div><div class="nm">Review–3R</div>
+      <div class="sb">Recall → Retrieve → Repeat with Variation</div></div>
+    <div class="it"><div class="no">Part Five</div><div class="nm">Learning Habit</div>
+      <div class="sb">S · C · A · L · E 五個讓習慣活下來的原則</div></div>
+  </div>
+</section>
+
+<section class="slide mid" data-sec="Emma’s English Class">
+  <div class="cols c-media" style="align-items:center">
+    <div class="stack">
+      <h1 class="mega en r" style="--d:.06s">Thank you.</h1>
+      <div class="rule r" style="--d:.16s"></div>
+      <p class="r" style="--d:.22s; font-size:29px; color:var(--ink); line-height:1.65">
+        英文學習相關問題<br>或課程服務需求，</p>
+      <p class="r" style="--d:.3s; font-size:27px; color:var(--mute); line-height:1.65; margin-top:34px">
+        掃描 QR Code<br>加入 LINE 官方帳號</p>
+    </div>
+
+    <div class="qrcard r" style="--d:.38s">
+      <div class="qrbox">
+        <img src="images/line-qr.png" alt="Emma’s English Class LINE 官方帳號 QR Code">
+      </div>
+      <div class="cap">掃描加入官方帳號</div>
+    </div>
+  </div>
+</section>
+</div></div>
+<script>
+/* ═══════════════════════════════════════════════
+   從停權到 Discord — 共用簡報引擎（沿用方舟工作坊的引擎，加上 .shot 圖片 fallback）
+   每個單元 HTML 只要放 <section class="slide"> 即可，
+   邊框、頁碼、導覽列、動畫都由這支檔案接手。
+
+   單元檔的 <body> 屬性：
+     data-unit      單元編號，例如 "04"
+     data-unit-name 單元名稱，例如 "認識 Claude Desktop"
+     data-prev      上一個單元檔名（可省略）
+     data-next      下一個單元檔名（可省略）
+
+   鍵盤：→ 下一步／← 上一步／Tab 全螢幕／R 重播／Space 回目錄
+   ═══════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var D = document, W = window;
+var reduce = W.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function $(sel, root){ return (root||D).querySelector(sel); }
+function $$(sel, root){ return Array.prototype.slice.call((root||D).querySelectorAll(sel)); }
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+/* ─── 舞台縮放 ─────────────────────────────── */
+var stage = $('#stage');
+function fit(){
+  var s = Math.min(W.innerWidth/1280, W.innerHeight/720);
+  var x = (W.innerWidth  - 1280*s)/2;
+  var y = (W.innerHeight -  720*s)/2;
+  stage.style.transform = 'translate('+x+'px,'+y+'px) scale('+s+')';
+}
+W.addEventListener('resize', fit); fit();
+
+/* ─── 版面骨架 ─────────────────────────────── */
+var B = D.body.dataset;
+var UNIT = B.unit || '', UNAME = B.unitName || '';
+var PREV = B.prev || '', NEXT = B.next || '', HOME = B.home || 'index.html';
+
+var chrome = D.createElement('div');
+chrome.innerHTML =
+  '<div class="hull"></div>' +
+  '<div class="eyebrow-slot">' +
+    (UNIT ? '<span class="u">UNIT ' + UNIT + '</span><span>·</span>' : '') +
+    '<span id="ebSec"></span>' +
+  '</div>' +
+  '<div id="pageno"><span id="pnCur">01</span> / <span id="pnAll">01</span></div>' +
+  '<div id="railwrap"><div id="rail"></div></div>' +
+  '<div id="nav">' +
+    '<button id="btnPrev" aria-label="上一步"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>' +
+    '<button id="btnNext" aria-label="下一步"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>' +
+  '</div>' +
+  '<div id="help">' +
+    '<button type="button" data-act="full"><kbd>Tab</kbd> 全螢幕</button>' +
+    '<button type="button" data-act="home"><kbd>Space</kbd> 目錄</button>' +
+  '</div>';
+while(chrome.firstChild) stage.appendChild(chrome.firstChild);
+
+/* 頂部色帶與進度條要貼齊瀏覽器視窗上緣，不能跟著舞台一起被置中留白，
+   所以把這兩層從 #stage 移到 #viewport（stage 有 transform，裡面的 fixed 會失效）。 */
+var viewport = $('#viewport');
+[$('.hull'), $('#railwrap')].forEach(function(el){ if(el && viewport) viewport.appendChild(el); });
+
+/* ─── 模板展開（同一份 UI 重複用於多張投影片） ─── */
+$$('[data-tpl]').forEach(function(host){
+  var tpl = D.getElementById('tpl-' + host.dataset.tpl);
+  if(tpl) host.appendChild(tpl.content.cloneNode(true));
+});
+
+/* ─── 實作計時器（一律手動點擊開始） ───────────── */
+var TSTORE_TTL = 6*60*60*1000;
+function tKey(i){ return 'ark-t-' + UNIT + '-' + i; }
+function tLoad(i){
+  try{
+    var raw = localStorage.getItem(tKey(i));
+    if(!raw) return null;
+    var o = JSON.parse(raw);
+    if(!o || Date.now() - o.at > TSTORE_TTL){ localStorage.removeItem(tKey(i)); return null; }
+    if(o.run) o.left = Math.max(0, o.left - Math.round((Date.now() - o.at)/1000));
+    return o;
+  }catch(e){ return null; }
+}
+function tSave(i, st){
+  try{ localStorage.setItem(tKey(i), JSON.stringify({left:st.left, run:st.run, at:Date.now()})); }catch(e){}
+}
+
+$$('.atimer').forEach(function(el, i){
+  var mins  = +(el.dataset.min || 5);
+  var label = el.dataset.label || '剩餘時間';
+  var xl    = el.dataset.size === 'xl';
+  var R  = xl ? 114 : 78;
+  var SZ = xl ? 260 : 180;
+  var C  = 2*Math.PI*R;
+
+  el.innerHTML =
+    '<div class="ring" style="width:'+SZ+'px;height:'+SZ+'px">' +
+      '<svg width="'+SZ+'" height="'+SZ+'" viewBox="0 0 '+SZ+' '+SZ+'" style="transform:rotate(-90deg)">' +
+        '<circle class="bg" cx="'+SZ/2+'" cy="'+SZ/2+'" r="'+R+'"/>' +
+        '<circle class="fg" cx="'+SZ/2+'" cy="'+SZ/2+'" r="'+R+'" stroke-dasharray="'+C+'" stroke-dashoffset="0"/>' +
+      '</svg>' +
+      '<div class="face">' +
+        '<div class="num" style="font-size:'+(xl?64:38)+'px">'+String(mins).padStart(2,'0')+':00</div>' +
+        '<div class="cap">'+label+'</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="ctl">' +
+      '<button class="btn t-go">▶ 開始計時</button>' +
+      '<button class="btn t-rst">重設</button>' +
+    '</div>';
+
+  var st = { total: mins*60, left: mins*60, run: false };
+  var saved = tLoad(i);
+  if(saved){ st.left = Math.min(st.total, saved.left); st.run = !!saved.run && st.left > 0; }
+  el._t = st;
+
+  var num = $('.num', el), fg = $('.fg', el);
+  var go  = $('.t-go', el), rst = $('.t-rst', el);
+
+  function paint(){
+    var m = Math.floor(st.left/60), s = st.left%60;
+    num.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    fg.style.strokeDashoffset = C * (1 - st.left/st.total);
+    el.classList.toggle('done', st.left <= 0);
+    go.textContent = st.left <= 0 ? '時間到' : (st.run ? '❙❙ 暫停' : '▶ 開始計時');
+    go.classList.toggle('on', st.run);
+  }
+  st.paint = paint;
+
+  go.addEventListener('click', function(){
+    if(st.left <= 0) return;
+    st.run = !st.run; paint(); tSave(i, st);
+  });
+  rst.addEventListener('click', function(){
+    st.left = st.total; st.run = false; paint(); tSave(i, st);
+  });
+  setInterval(function(){
+    if(st.run && st.left > 0){
+      st.left--; paint();
+      if(st.left % 5 === 0 || st.left <= 0) tSave(i, st);
+      if(st.left <= 0) st.run = false;
+    }
+  }, 1000);
+  paint();
+});
+
+/* ─── 圖片／影片 fallback ───────────────────── */
+$$('.avatar img, .shot img, .rec video').forEach(function(m){
+  m.addEventListener('error', function(){ m.classList.add('dead'); });
+  if(m.tagName === 'IMG' && m.complete && !m.naturalWidth) m.classList.add('dead');
+  if(m.tagName === 'VIDEO') setTimeout(function(){ if(!m.videoWidth) m.classList.add('dead'); }, 2200);
+});
+
+/* ─── 播放器尺寸：跟著影片原始比例，不裁切 ──── */
+/* 預設框是 16:9，但錄的畫面常常不是 16:9（例如視窗錄影偏方），
+   硬套 16:9 會把上下切掉。讀到影片實際尺寸後改寫容器比例，
+   高度超過上限時改縮寬度，讓整支影片完整顯示。 */
+var REC_MAX_H = 500;                     /* 1280×720 舞台內，播放器高度上限 */
+function fitRec(v){
+  if(!v.videoWidth || !v.videoHeight) return;
+  var box = v.closest('.rec');
+  if(!box) return;
+  box.style.aspectRatio = v.videoWidth + '/' + v.videoHeight;
+  box.style.maxWidth = '';
+  var w = box.clientWidth;
+  if(!w) return;                         /* 這張還沒顯示，等 enter() 再算一次 */
+  if(w * v.videoHeight / v.videoWidth > REC_MAX_H){
+    box.style.maxWidth = Math.round(REC_MAX_H * v.videoWidth / v.videoHeight) + 'px';
+  }
+}
+$$('.rec video').forEach(function(v){
+  v.addEventListener('loadedmetadata', function(){ fitRec(v); });
+  fitRec(v);
+  /* 講師自己按暫停時記住，換頁回來不要又被自動播放蓋掉 */
+  v.addEventListener('pause', function(){ if(!v.ended) v.dataset.held = '1'; });
+  v.addEventListener('play',  function(){ delete v.dataset.held; });
+});
+
+/* 影片用瀏覽器內建播放器（controls），暫停／進度／音量／全螢幕都在上面。
+   播放中滑鼠不在影片上時 Chrome 會自動把控制列收起來，簡報畫面才乾淨。 */
+function recPlay(v){ var p = v.play(); if(p && p.catch) p.catch(function(){}); }
+
+/* ─── 對話模擬 ─────────────────────────────── */
+/* <template class="seq"> 每行格式：  C| 文字   或   U| 文字
+   同一個角色連續多行會合併成一則訊息；只寫 "C|" 代表空行。
+   內文可用 **粗體**、`程式碼`；以 "- " 開頭是選項，"-* " 是被選中的選項。 */
+function parseSeq(text){
+  var out = [], cur = null;
+  text.split('\n').forEach(function(raw){
+    var m = raw.match(/^\s*([CUcu])\|(.*)$/);
+    if(!m){
+      if(raw.trim() === '') return;
+      if(cur) cur.t.push(raw.trim());
+      return;
+    }
+    var role = m[1].toUpperCase() === 'U' ? 'u' : 'c';
+    var body = m[2].replace(/^ /, '');
+    if(!cur || cur.r !== role){ cur = { r: role, t: [] }; out.push(cur); }
+    cur.t.push(body);
+  });
+  return out.map(function(x){ return { r: x.r, t: x.t.join('\n') }; });
+}
+
+function esc(x){ return x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function inlineFmt(s){
+  var out = '', re = /\*\*([^*]+)\*\*|`([^`]+)`/g, m, last = 0;
+  while((m = re.exec(s))){
+    out += esc(s.slice(last, m.index));
+    out += m[1] ? '<strong>'+esc(m[1])+'</strong>' : '<code>'+esc(m[2])+'</code>';
+    last = re.lastIndex;
+  }
+  return out + esc(s.slice(last));
+}
+
+var chatGen = 0;
+function runChat(root){
+  var tpl = $('template.seq', root);
+  if(!tpl) return;
+  var seq = parseSeq(tpl.content.textContent || '');
+  if(!seq.length) return;
+
+  var gen = ++chatGen;
+  var body = $('.chat-body', root), field = $('.field', root), send = $('.send', root);
+  body.innerHTML = ''; field.innerHTML = ''; send.classList.remove('hot');
+  var SPD = reduce ? 0 : 1;
+  function alive(){ return gen === chatGen; }
+
+  function bubble(role){
+    var w = D.createElement('div');
+    w.className = 'msg ' + (role === 'u' ? 'user' : 'claude');
+    w.innerHTML = (role === 'c' ? '<div class="av">C</div>' : '') + '<div class="bub"></div>';
+    body.appendChild(w);
+    body.scrollTop = body.scrollHeight;
+    return $('.bub', w);
+  }
+
+  async function typeField(text){
+    field.innerHTML = '<span class="txt"></span><span class="caret"></span>';
+    var t = $('.txt', field);
+    for(var i = 0; i < text.length; i++){
+      if(!alive()) return;
+      t.textContent = text.slice(0, i+1);
+      await sleep(36*SPD + Math.random()*26*SPD);
+    }
+    send.classList.add('hot');
+    await sleep(420*SPD);
+  }
+
+  async function claudeMsg(text, onAllPicked){
+    var bub = bubble('c');
+    bub.innerHTML = '<div class="think"><span></span><span></span><span></span></div>';
+    await sleep(760*SPD);
+    if(!alive()) return;
+    bub.innerHTML = '';
+
+    var lines = text.split('\n'), optWrap = null;
+    var totalPicks = 0, picked = 0;
+    for(var pi = 0; pi < lines.length; pi++) if(lines[pi].indexOf('-* ') === 0) totalPicks++;
+    for(var li = 0; li < lines.length; li++){
+      if(!alive()) return;
+      var raw = lines[li];
+
+      if(raw === ''){
+        var sp = D.createElement('div'); sp.className = 'ln sp'; bub.appendChild(sp);
+        optWrap = null; await sleep(120*SPD); continue;
+      }
+
+      if(raw.indexOf('- ') === 0 || raw.indexOf('-* ') === 0){
+        /* 先把整段連續的選項收齊 */
+        var group = [];
+        while(li < lines.length &&
+             (lines[li].indexOf('- ') === 0 || lines[li].indexOf('-* ') === 0)){
+          var isSel = lines[li].indexOf('-* ') === 0;
+          group.push({ sel: isSel, txt: lines[li].slice(isSel ? 3 : 2) });
+          li++;
+        }
+        li--;                                   /* for 迴圈還會再 ++ 一次 */
+
+        var wrap = D.createElement('div');
+        wrap.className = 'ln';
+        bub.appendChild(wrap);
+
+        /* 第一階段：所有選項先全部出現，都還沒勾 */
+        var chips = [];
+        for(var gi = 0; gi < group.length; gi++){
+          if(!alive()) return;
+          var ch = D.createElement('span');
+          ch.className = 'opt';
+          ch.innerHTML = '<span class="mk"></span>' + inlineFmt(group[gi].txt);
+          wrap.appendChild(ch);
+          chips.push(ch);
+          body.scrollTop = body.scrollHeight;
+          await sleep(170*SPD);
+        }
+
+        /* 第二階段：停一下，才開始打勾 */
+        await sleep(560*SPD);
+        for(var gj = 0; gj < group.length; gj++){
+          if(!group[gj].sel) continue;
+          if(!alive()) return;
+          chips[gj].classList.add('sel');
+          picked++;
+          if(onAllPicked && picked === totalPicks) onAllPicked();
+          await sleep(400*SPD);
+        }
+        optWrap = null;
+        continue;
+      }
+
+      /* 工具動作行「· 」與完成行「✓ 」：直接跳出，不逐字打 */
+      var isTool = raw.indexOf('· ') === 0, isOk = raw.indexOf('✓ ') === 0;
+      if(isTool || isOk){
+        optWrap = null;
+        var tl = D.createElement('div');
+        tl.className = 'ln ' + (isTool ? 'tool' : 'ok');
+        tl.innerHTML = inlineFmt(isTool ? raw.slice(2) : raw);
+        bub.appendChild(tl);
+        body.scrollTop = body.scrollHeight;
+        await sleep(330*SPD);
+        continue;
+      }
+
+      optWrap = null;
+      var quote = raw.indexOf('> ') === 0;
+      if(quote) raw = raw.slice(2);
+      var ln = D.createElement('div');
+      ln.className = 'ln' + (quote ? ' quote' : '');
+      bub.appendChild(ln);
+      var plain = raw.replace(/\*\*/g, '').replace(/`/g, '');
+      for(var ci = 0; ci < plain.length; ci++){
+        if(!alive()) return;
+        ln.textContent = plain.slice(0, ci+1);
+        body.scrollTop = body.scrollHeight;
+        await sleep(16*SPD);
+      }
+      ln.innerHTML = inlineFmt(raw);
+      body.scrollTop = body.scrollHeight;
+      await sleep(150*SPD);
+    }
+  }
+
+  (async function(){
+    await sleep(520*SPD);
+    for(var i = 0; i < seq.length; i++){
+      if(!alive()) return;
+      var it = seq[i];
+      if(it.r === 'u'){
+        await typeField(it.t);
+        if(!alive()) return;
+        field.innerHTML = ''; send.classList.remove('hot');
+        bubble('u').textContent = it.t;
+        body.scrollTop = body.scrollHeight;
+        await sleep(430*SPD);
+      } else {
+        var nxt = seq[i+1], popped = false;
+        await claudeMsg(it.t, (nxt && nxt.r === 'u') ? function(){
+          if(popped || !alive()) return;
+          popped = true;
+          var pb = bubble('u');
+          pb.parentNode.classList.add('pop');
+          pb.textContent = nxt.t;
+          body.scrollTop = body.scrollHeight;
+        } : null);
+        if(!alive()) return;
+        if(popped){ i++; await sleep(420*SPD); }
+        else await sleep(320*SPD);
+      }
+    }
+    if(alive()) field.innerHTML = '';
+  })();
+}
+
+$$('.chat').forEach(function(c){
+  if(!$('template.seq', c)) return;
+  var b = D.createElement('button');
+  b.className = 'replay'; b.type = 'button'; b.textContent = '↻ 重播';
+  b.addEventListener('click', function(){ runChat(c); });
+  c.parentNode.appendChild(b);
+});
+
+/* ─── 終端機模擬 ───────────────────────────── */
+/* <template class="lines"> 每行格式： 樣式| 內容
+   樣式：p（提示詞）/ cmt（步驟）/ tool（動作）/ ok / link / sp（空行） */
+function runTerm(el){
+  var tpl = $('template.lines', el);
+  if(!tpl) return;
+  var src = tpl.innerHTML.split('\n');
+  el.innerHTML = '';
+  el.appendChild(tpl);
+
+  var nodes = [];
+  src.forEach(function(raw){
+    var m = raw.match(/^\s*([a-z]+)\|(.*)$/);
+    if(!m) return;
+    var d = D.createElement('div');
+    if(m[1] === 'sp'){ d.className = 'l'; d.style.height = '16px'; d.innerHTML = '&nbsp;'; }
+    else { d.className = 'l ' + m[1]; d.innerHTML = m[2]; }
+    el.appendChild(d);
+    nodes.push(d);
+  });
+
+  var i = 0;
+  clearInterval(el._iv);
+  if(reduce){ nodes.forEach(function(n){ n.classList.add('on'); }); return; }
+  el._iv = setInterval(function(){
+    if(i >= nodes.length){ clearInterval(el._iv); return; }
+    nodes[i++].classList.add('on');
+  }, 340);
+}
+
+/* ─── 導覽 ─────────────────────────────────── */
+var slides = $$('.slide');
+var cur = 0, step = 0, moving = false;
+var ebSec = $('#ebSec'), pnCur = $('#pnCur'), pnAll = $('#pnAll'), rail = $('#rail');
+
+pnAll.textContent = String(slides.length).padStart(2,'0');
+slides.forEach(function(s){ s.hidden = true; });
+
+function maxStep(s){ return +(s.dataset.steps || 0); }
+
+function applySteps(s){
+  $$('[data-step]', s).forEach(function(el){
+    var n = +el.dataset.step;
+    var on = el.dataset.only === '1' ? (n === step) : (n <= step && n > 0);
+    el.classList.toggle('on', on);
+    if(el.dataset.only === '1') el.style.pointerEvents = on ? 'auto' : 'none';
+  });
+}
+
+/* Claude Desktop 聚光燈：投影片標 data-spot="元素 class" */
+function applySpot(s){
+  var win = $('.cd', s), spot = $('.spot', s);
+  if(!win || !spot) return;
+  var sel = s.dataset.spot;
+  if(!sel){ spot.classList.remove('on'); return; }
+  var t = $('.' + sel, win);
+  if(!t){ spot.classList.remove('on'); return; }
+  if(t.classList.contains('cd-item')){
+    $$('.cd-item', win).forEach(function(el){ el.classList.toggle('act', el === t); });
+  }
+  var wr = win.getBoundingClientRect(), tr = t.getBoundingClientRect();
+  var k  = wr.width / win.offsetWidth || 1;
+  var pad = 7;
+  spot.style.left   = ((tr.left - wr.left)/k - pad) + 'px';
+  spot.style.top    = ((tr.top  - wr.top )/k - pad) + 'px';
+  spot.style.width  = (tr.width/k  + pad*2) + 'px';
+  spot.style.height = (tr.height/k + pad*2) + 'px';
+  spot.classList.add('on');
+}
+
+function enter(s){
+  ebSec.textContent = s.dataset.sec || UNAME;
+  pnCur.textContent = String(cur+1).padStart(2,'0');
+  rail.style.width = (slides.length > 1 ? cur/(slides.length-1)*100 : 100) + '%';
+
+  applySteps(s);
+  if(s.dataset.spot !== undefined) setTimeout(function(){ applySpot(s); }, 60);
+
+  var chat = $('.chat', s);
+  if(chat && $('template.seq', chat)) setTimeout(function(){ runChat(chat); }, 380);
+
+  var term = $('.term', s);
+  if(term && $('template.lines', term)) setTimeout(function(){ runTerm(term); }, 460);
+
+  $$('.rec video', s).forEach(fitRec);
+  $$('video', s).forEach(function(v){ if(!v.dataset.held) recPlay(v); });
+}
+
+function show(n, atEnd){
+  if(moving) return;
+  if(n < 0){ if(PREV) leave(PREV + '#end'); return; }
+  if(n >= slides.length){ if(NEXT) leave(NEXT); return; }
+  moving = true;
+  chatGen++;
+  var old = slides[cur];
+  old.classList.remove('in'); old.classList.add('out');
+  setTimeout(function(){
+    old.classList.remove('out'); old.hidden = true;
+    cur = n;
+    var s = slides[cur];
+    step = atEnd ? maxStep(s) : 0;
+    s.hidden = false;
+    void s.offsetWidth;
+    s.classList.add('in');
+    enter(s);
+    moving = false;
+  }, reduce ? 0 : 230);
+}
+
+function leave(href){
+  moving = true;
+  stage.classList.add('leaving');
+  setTimeout(function(){ W.location.href = href; }, reduce ? 0 : 260);
+}
+
+function next(){
+  var s = slides[cur];
+  if(step < maxStep(s)){ step++; applySteps(s); if(s.dataset.spot !== undefined) applySpot(s); return; }
+  show(cur+1);
+}
+function prev(){
+  var s = slides[cur];
+  if(step > 0){ step--; applySteps(s); if(s.dataset.spot !== undefined) applySpot(s); return; }
+  show(cur-1, true);
+}
+
+/* 回目錄。單檔版（dist）把目錄併在同一份 document 裡，data-home 會是 "#toc"，
+   這時直接同頁切換投影片；換頁會讓瀏覽器結束全螢幕，所以能不換就不換。 */
+function goHome(){
+  if(HOME.charAt(0) === '#'){
+    var i = slides.indexOf($(HOME));
+    if(i >= 0){ if(i !== cur) show(i); return; }
+  }
+  leave(HOME);
+}
+
+function toggleFull(){
+  if(D.fullscreenElement) D.exitFullscreen();
+  else if(D.documentElement.requestFullscreen) D.documentElement.requestFullscreen();
+}
+function replayCurrent(){
+  var s = slides[cur];
+  var c = $('.chat', s); if(c && $('template.seq', c)) runChat(c);
+  var t = $('.term', s); if(t && $('template.lines', t)) runTerm(t);
+}
+
+/* 按完就把焦點移開，否則之後按空白鍵會再次觸發同一顆按鈕（等於跳兩步） */
+function hit(fn){
+  return function(e){ if(e.currentTarget.blur) e.currentTarget.blur(); fn(); };
+}
+$('#btnNext').addEventListener('click', hit(next));
+$('#btnPrev').addEventListener('click', hit(prev));
+
+/* 底下那排說明也是按鈕，滑鼠可以直接點 */
+var ACTS = { full: toggleFull, home: goHome };
+
+/* 單檔版目錄的單元連結（build.mjs 會把 href 換成 data-goto="全域索引"） */
+stage.addEventListener('click', function(e){
+  var a = e.target.closest && e.target.closest('[data-goto]');
+  if(!a) return;
+  e.preventDefault();
+  var i = parseInt(a.dataset.goto, 10);
+  if(!isNaN(i) && i !== cur) show(i);
+});
+$('#help').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-act]');
+  if(!b) return;
+  b.blur();
+  ACTS[b.dataset.act]();
+});
+
+D.addEventListener('keydown', function(e){
+  if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  var k = e.key;
+  if(k === 'ArrowRight' || k === 'PageDown'){ e.preventDefault(); next(); }
+  else if(k === 'ArrowLeft' || k === 'PageUp'){ e.preventDefault(); prev(); }
+  else if(k === 'Home'){ e.preventDefault(); show(0); }
+  else if(k === 'End'){ e.preventDefault(); show(slides.length-1, true); }
+  else if(k === 'Tab'){ e.preventDefault(); toggleFull(); }
+  else if(k === ' '){ e.preventDefault(); goHome(); }
+  else if(k === 'r' || k === 'R'){ e.preventDefault(); replayCurrent(); }
+});
+
+/* 首張（從上一單元倒退進來時直接落在最後一張） */
+var startAt = (W.location.hash === '#end') ? slides.length-1 : 0;
+cur = startAt;
+step = (W.location.hash === '#end') ? maxStep(slides[cur]) : 0;
+slides[cur].hidden = false;
+void slides[cur].offsetWidth;
+slides[cur].classList.add('in');
+enter(slides[cur]);
+
+})();
+
+/* ═══════════════════════════════════════════════
+   QR 產生器（Byte 模式、EC level M、版本 1–10）
+   用法：<div class="qr" data-qr="https://…"></div>
+   data-qr 留空會顯示佔位框。
+   ═══════════════════════════════════════════════ */
+(function(){
+'use strict';
+var D = document;
+
+var EXP = new Array(512), LOG = new Array(256);
+(function(){ var x = 1;
+  for(var i = 0; i < 255; i++){ EXP[i] = x; LOG[x] = i; x <<= 1; if(x & 0x100) x ^= 0x11D; }
+  for(var j = 255; j < 512; j++) EXP[j] = EXP[j-255];
+})();
+function mul(a, b){ return (a === 0 || b === 0) ? 0 : EXP[LOG[a] + LOG[b]]; }
+
+function rsGen(n){
+  var g = [1];
+  for(var i = 0; i < n; i++){
+    var ng = new Array(g.length + 1).fill(0);
+    for(var j = 0; j < g.length; j++){ ng[j] ^= g[j]; ng[j+1] ^= mul(g[j], EXP[i]); }
+    g = ng;
+  }
+  return g;
+}
+function rsEnc(data, n){
+  var g = rsGen(n), res = new Array(n).fill(0);
+  for(var i = 0; i < data.length; i++){
+    var f = data[i] ^ res[0];
+    res.shift(); res.push(0);
+    if(f !== 0) for(var j = 0; j < n; j++) res[j] ^= mul(g[j+1], f);
+  }
+  return res;
+}
+
+/* [EC碼數, 群組1區塊數, 群組1資料數, 群組2區塊數, 群組2資料數] */
+var ECB = {
+  1:[10,1,16], 2:[16,1,28], 3:[26,1,44], 4:[18,2,32], 5:[24,2,43],
+  6:[16,4,27], 7:[18,4,31], 8:[22,2,38,2,39], 9:[22,3,36,2,37], 10:[26,4,43,1,44]
+};
+var ALIGN = {
+  1:[], 2:[6,18], 3:[6,22], 4:[6,26], 5:[6,30],
+  6:[6,34], 7:[6,22,38], 8:[6,24,42], 9:[6,26,46], 10:[6,28,50]
+};
+
+function utf8(str){
+  var s = unescape(encodeURIComponent(str)), out = [];
+  for(var i = 0; i < s.length; i++) out.push(s.charCodeAt(i));
+  return out;
+}
+function bitLen(x){ var n = 0; while(x){ n++; x >>>= 1; } return n; }
+function bch(data, gen, len){
+  var d = data;
+  while(bitLen(d) >= len) d ^= gen << (bitLen(d) - len);
+  return d;
+}
+
+function make(text){
+  var bytes = utf8(text), v, ecb, dataCap, cc;
+  for(v = 1; v <= 10; v++){
+    ecb = ECB[v];
+    dataCap = ecb[1]*ecb[2] + (ecb[3] ? ecb[3]*ecb[4] : 0);
+    cc = v < 10 ? 8 : 16;
+    if(4 + cc + 8*bytes.length <= dataCap*8) break;
+  }
+  if(v > 10) throw new Error('QR: 內容太長（超過版本 10 容量）');
+
+  var bits = [];
+  function put(val, len){ for(var i = len-1; i >= 0; i--) bits.push((val >>> i) & 1); }
+  put(4, 4); put(bytes.length, cc);
+  for(var i = 0; i < bytes.length; i++) put(bytes[i], 8);
+  var cap = dataCap*8;
+  for(i = 0; i < 4 && bits.length < cap; i++) bits.push(0);
+  while(bits.length % 8) bits.push(0);
+  var pad = [0xEC, 0x11], pi = 0;
+  while(bits.length < cap) put(pad[pi++ % 2], 8);
+
+  var dcw = [];
+  for(i = 0; i < bits.length; i += 8){
+    var b = 0;
+    for(var j = 0; j < 8; j++) b = (b << 1) | bits[i+j];
+    dcw.push(b);
+  }
+
+  var ecLen = ecb[0], blocks = [], off = 0;
+  function addBlocks(count, size){
+    for(var k = 0; k < count; k++){
+      var d = dcw.slice(off, off + size); off += size;
+      blocks.push({ d: d, e: rsEnc(d, ecLen) });
+    }
+  }
+  addBlocks(ecb[1], ecb[2]);
+  if(ecb[3]) addBlocks(ecb[3], ecb[4]);
+
+  var out = [], maxD = 0;
+  blocks.forEach(function(b){ if(b.d.length > maxD) maxD = b.d.length; });
+  for(i = 0; i < maxD; i++) blocks.forEach(function(b){ if(i < b.d.length) out.push(b.d[i]); });
+  for(i = 0; i < ecLen; i++) blocks.forEach(function(b){ out.push(b.e[i]); });
+
+  var n = 17 + 4*v, m = [], res = [];
+  for(i = 0; i < n; i++){ m.push(new Array(n).fill(0)); res.push(new Array(n).fill(false)); }
+  function setF(r, c, val){ if(r < 0 || c < 0 || r >= n || c >= n) return; m[r][c] = val; res[r][c] = true; }
+
+  function finder(r, c){
+    for(var i = -1; i <= 7; i++) for(var j = -1; j <= 7; j++){
+      var on = (i >= 0 && i <= 6 && (j === 0 || j === 6)) ||
+               (j >= 0 && j <= 6 && (i === 0 || i === 6)) ||
+               (i >= 2 && i <= 4 && j >= 2 && j <= 4);
+      setF(r+i, c+j, on ? 1 : 0);
+    }
+  }
+  finder(0, 0); finder(0, n-7); finder(n-7, 0);
+  for(i = 8; i < n-8; i++){ setF(6, i, i % 2 === 0 ? 1 : 0); setF(i, 6, i % 2 === 0 ? 1 : 0); }
+
+  var al = ALIGN[v];
+  for(i = 0; i < al.length; i++) for(var jj = 0; jj < al.length; jj++){
+    var ar = al[i], ac = al[jj];
+    if((ar <= 8 && ac <= 8) || (ar <= 8 && ac >= n-9) || (ar >= n-9 && ac <= 8)) continue;
+    for(var dr = -2; dr <= 2; dr++) for(var dc = -2; dc <= 2; dc++)
+      setF(ar+dr, ac+dc, Math.max(Math.abs(dr), Math.abs(dc)) !== 1 ? 1 : 0);
+  }
+
+  for(i = 0; i <= 8; i++){ if(i !== 6) setF(8, i, 0); }
+  for(i = 0; i <= 8; i++){ if(i !== 6) setF(i, 8, 0); }
+  for(i = n-8; i < n; i++) setF(8, i, 0);
+  for(i = n-7; i < n; i++) setF(i, 8, 0);
+  setF(n-8, 8, 1);
+
+  if(v >= 7){
+    var vi = (v << 12) | bch(v << 12, 0x1F25, 13);
+    for(i = 0; i < 18; i++){
+      var vb = (vi >>> i) & 1;
+      setF(Math.floor(i/3), n-11 + i%3, vb);
+      setF(n-11 + i%3, Math.floor(i/3), vb);
+    }
+  }
+
+  var di = 0, up = true;
+  for(var col = n-1; col >= 1; col -= 2){
+    if(col === 6) col = 5;
+    for(i = 0; i < n; i++){
+      var row = up ? n-1-i : i;
+      for(var k = 0; k < 2; k++){
+        var c2 = col - k;
+        if(!res[row][c2]){
+          m[row][c2] = di < out.length*8 ? ((out[di >> 3] >>> (7 - (di & 7))) & 1) : 0;
+          di++;
+        }
+      }
+    }
+    up = !up;
+  }
+
+  function maskAt(k, r, c){
+    switch(k){
+      case 0: return (r+c) % 2 === 0;
+      case 1: return r % 2 === 0;
+      case 2: return c % 3 === 0;
+      case 3: return (r+c) % 3 === 0;
+      case 4: return (Math.floor(r/2) + Math.floor(c/3)) % 2 === 0;
+      case 5: return (r*c) % 2 + (r*c) % 3 === 0;
+      case 6: return ((r*c) % 2 + (r*c) % 3) % 2 === 0;
+      default: return ((r+c) % 2 + (r*c) % 3) % 2 === 0;
+    }
+  }
+  function putFormat(mm, mask){
+    var fd = mask;                                  /* EC level M = 00 */
+    var fmt = (((fd << 10) | bch(fd << 10, 0x537, 11)) ^ 0x5412);
+    for(var i = 0; i < 15; i++){
+      var bit = (fmt >>> (14 - i)) & 1;   /* 高位在前 */
+      if(i < 6) mm[8][i] = bit;
+      else if(i === 6) mm[8][7] = bit;
+      else if(i === 7) mm[8][8] = bit;
+      else if(i === 8) mm[7][8] = bit;
+      else mm[14-i][8] = bit;
+      if(i < 7) mm[n-1-i][8] = bit;      /* 第二份：垂直 7 格 */
+      else mm[8][n-15+i] = bit;          /* 第二份：水平 8 格 */
+    }
+    mm[n-8][8] = 1;
+  }
+  function penalty(mm){
+    var p = 0, i, j, run, dark = 0;
+    for(i = 0; i < n; i++){
+      run = 1;
+      for(j = 1; j < n; j++){
+        if(mm[i][j] === mm[i][j-1]) run++;
+        else { if(run >= 5) p += 3 + run - 5; run = 1; }
+      }
+      if(run >= 5) p += 3 + run - 5;
+      run = 1;
+      for(j = 1; j < n; j++){
+        if(mm[j][i] === mm[j-1][i]) run++;
+        else { if(run >= 5) p += 3 + run - 5; run = 1; }
+      }
+      if(run >= 5) p += 3 + run - 5;
+    }
+    for(i = 0; i < n-1; i++) for(j = 0; j < n-1; j++){
+      var s = mm[i][j] + mm[i][j+1] + mm[i+1][j] + mm[i+1][j+1];
+      if(s === 0 || s === 4) p += 3;
+    }
+    var pat = [1,0,1,1,1,0,1,0,0,0,0], rev = [0,0,0,0,1,0,1,1,1,0,1];
+    for(i = 0; i < n; i++) for(j = 0; j <= n-11; j++){
+      var hf = true, hr = true, vf = true, vr = true;
+      for(var t = 0; t < 11; t++){
+        if(mm[i][j+t] !== pat[t]) hf = false;
+        if(mm[i][j+t] !== rev[t]) hr = false;
+        if(mm[j+t][i] !== pat[t]) vf = false;
+        if(mm[j+t][i] !== rev[t]) vr = false;
+      }
+      if(hf) p += 40;
+      if(hr) p += 40;
+      if(vf) p += 40;
+      if(vr) p += 40;
+    }
+    for(i = 0; i < n; i++) for(j = 0; j < n; j++) dark += mm[i][j];
+    p += Math.floor(Math.abs(dark*100/(n*n) - 50) / 5) * 10;
+    return p;
+  }
+
+  var best = null, bestP = Infinity;
+  for(var mk = 0; mk < 8; mk++){
+    var mm = m.map(function(row){ return row.slice(); });
+    for(i = 0; i < n; i++) for(var jc = 0; jc < n; jc++)
+      if(!res[i][jc] && maskAt(mk, i, jc)) mm[i][jc] ^= 1;
+    putFormat(mm, mk);
+    var pv = penalty(mm);
+    if(pv < bestP){ bestP = pv; best = mm; }
+  }
+  return best;
+}
+
+function svg(mat, fg, bg, quiet){
+  var n = mat.length, q = quiet == null ? 2 : quiet, size = n + 2*q, d = '';
+  for(var r = 0; r < n; r++) for(var c = 0; c < n; c++)
+    if(mat[r][c]) d += 'M' + (c+q) + ' ' + (r+q) + 'h1v1h-1z';
+  return '<svg viewBox="0 0 ' + size + ' ' + size + '" width="100%" height="100%" ' +
+         'shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">' +
+         '<rect width="' + size + '" height="' + size + '" fill="' + (bg || '#F2F3EF') + '"/>' +
+         '<path d="' + d + '" fill="' + (fg || '#0B1114') + '"/></svg>';
+}
+
+window.QR = { make: make, svg: svg };
+
+/* 頁面上的 .qr 元素 */
+Array.prototype.forEach.call(D.querySelectorAll('.qr'), function(el){
+  var url = (el.dataset.qr || '').trim();
+  if(!url){
+    el.classList.add('empty');
+    el.innerHTML = '<span>填入連結<br><code>data-qr="…"</code></span>';
+    return;
+  }
+  try { el.innerHTML = svg(make(url), el.dataset.fg, el.dataset.bg); }
+  catch(e){ el.classList.add('empty'); el.innerHTML = '<span>' + e.message + '</span>'; }
+});
+
+})();
+</script>
+</body>
+</html>
