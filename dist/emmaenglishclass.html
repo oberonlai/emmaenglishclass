@@ -305,20 +305,36 @@ p{margin:0; line-height:1.75;}
 .rescards .arw{display:grid; place-items:center; font-size:28px; color:#BD7F89;}
 
 /* ── 六種提示詞卡 ───────────────────────── */
-.prompts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px;}
-.prompts > div{border-radius:6px; padding:26px 24px 28px; display:flex; flex-direction:column;
-  justify-content:center; min-height:148px;}
-.prompts > div:nth-child(1),.prompts > div:nth-child(2){background:var(--tint-a);}
-.prompts > div:nth-child(3),.prompts > div:nth-child(4){background:var(--tint-b);}
-.prompts > div:nth-child(5),.prompts > div:nth-child(6){background:var(--tint-c);}
-.prompts .top{display:flex; align-items:baseline; gap:12px;}
-.prompts .no{font-family:var(--mono); font-size:17px; font-weight:700; color:#C37F8A;}
-.prompts .en{font-family:var(--disp); font-size:25px; font-weight:700; color:#624B50;}
-.prompts .lv{font-family:var(--disp); font-size:13px; font-weight:700;
-  letter-spacing:.06em; color:var(--rose-deep); background:rgba(255,255,255,.72);
-  border-radius:20px; padding:4px 11px; white-space:nowrap;}
-.prompts .cn{display:flex; align-items:center; justify-content:space-between; gap:12px;
-  font-size:20px; color:#B07982; font-weight:500; margin-top:11px;}
+/* 白卡 + 頂部一條色線，色線由淺到深代表 A1 → A2–B1 → B2+，
+   跟其他頁的滿版色塊拉開差異，投影出來層次比較乾淨。 */
+.prompts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px;}
+.prompts > div{
+  position:relative; overflow:hidden;
+  background:#fff; border:1px solid var(--line-2); border-radius:7px;
+  padding:24px 26px 26px; display:flex; flex-direction:column;
+  box-shadow:0 10px 24px -20px rgba(92,69,73,.55);
+}
+.prompts > div::before{
+  content:""; position:absolute; left:0; right:0; top:0; height:3px; background:var(--rose);
+}
+.prompts > div:nth-child(3)::before,
+.prompts > div:nth-child(4)::before{background:var(--rose-deep);}
+.prompts > div:nth-child(5)::before,
+.prompts > div:nth-child(6)::before{background:var(--plum);}
+
+.prompts .top{display:flex; align-items:baseline; justify-content:space-between; gap:12px;}
+.prompts .no{font-family:var(--mono); font-size:14px; font-weight:500;
+  letter-spacing:.08em; color:var(--faint);}
+.prompts .lv{font-family:var(--disp); font-size:12px; font-weight:700;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--rose);}
+.prompts > div:nth-child(3) .lv,
+.prompts > div:nth-child(4) .lv{color:var(--rose-deep);}
+.prompts > div:nth-child(5) .lv,
+.prompts > div:nth-child(6) .lv{color:var(--plum);}
+
+.prompts .en{font-family:var(--disp); font-size:26px; font-weight:700;
+  color:var(--ink); line-height:1.2; margin-top:20px; letter-spacing:-.005em;}
+.prompts .cn{font-size:19px; color:var(--mute); font-weight:400; margin-top:8px;}
 
 /* QR（由 deck.js 依 data-qr 產生 SVG） */
 .qr{width:206px; height:206px; border-radius:8px; overflow:hidden;
@@ -608,28 +624,34 @@ template{display:none;}
   <div class="cols" style="grid-template-columns:1fr 206px; gap:40px; margin-top:16px; align-items:start">
     <div class="prompts r" style="--d:.18s">
       <div>
-        <div class="top"><span class="no">01</span><span class="en">Repetition</span></div>
-        <div class="cn"><span>模仿練習</span><span class="lv">A1</span></div>
+        <div class="top"><span class="no">01</span><span class="lv">A1</span></div>
+        <div class="en">Repetition</div>
+        <div class="cn">模仿練習</div>
       </div>
       <div>
-        <div class="top"><span class="no">02</span><span class="en">Substitution</span></div>
-        <div class="cn"><span>替換練習</span><span class="lv">A1</span></div>
+        <div class="top"><span class="no">02</span><span class="lv">A1</span></div>
+        <div class="en">Substitution</div>
+        <div class="cn">替換練習</div>
       </div>
       <div>
-        <div class="top"><span class="no">03</span><span class="en">Expansion</span></div>
-        <div class="cn"><span>擴句練習</span><span class="lv">A2–B1</span></div>
+        <div class="top"><span class="no">03</span><span class="lv">A2–B1</span></div>
+        <div class="en">Expansion</div>
+        <div class="cn">擴句練習</div>
       </div>
       <div>
-        <div class="top"><span class="no">04</span><span class="en">Transformation</span></div>
-        <div class="cn"><span>句型轉換</span><span class="lv">A2–B1</span></div>
+        <div class="top"><span class="no">04</span><span class="lv">A2–B1</span></div>
+        <div class="en">Transformation</div>
+        <div class="cn">句型轉換</div>
       </div>
       <div>
-        <div class="top"><span class="no">05</span><span class="en">Summarization</span></div>
-        <div class="cn"><span>摘要練習</span><span class="lv">B2+</span></div>
+        <div class="top"><span class="no">05</span><span class="lv">B2+</span></div>
+        <div class="en">Summarization</div>
+        <div class="cn">摘要練習</div>
       </div>
       <div>
-        <div class="top"><span class="no">06</span><span class="en">Paraphrasing</span></div>
-        <div class="cn"><span>改述練習</span><span class="lv">B2+</span></div>
+        <div class="top"><span class="no">06</span><span class="lv">B2+</span></div>
+        <div class="en">Paraphrasing</div>
+        <div class="cn">改述練習</div>
       </div>
     </div>
 
