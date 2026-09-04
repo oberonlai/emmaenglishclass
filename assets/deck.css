@@ -297,19 +297,20 @@ p{margin:0; line-height:1.75;}
 .rescards .arw{display:grid; place-items:center; font-size:28px; color:#BD7F89;}
 
 /* ── 六種提示詞卡 ───────────────────────── */
-.prompts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px;}
-.prompts > div{border-radius:6px; padding:16px 18px 18px; display:flex; flex-direction:column;}
+.prompts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px;}
+.prompts > div{border-radius:6px; padding:26px 24px 28px; display:flex; flex-direction:column;
+  justify-content:center; min-height:148px;}
 .prompts > div:nth-child(1),.prompts > div:nth-child(2){background:var(--tint-a);}
 .prompts > div:nth-child(3),.prompts > div:nth-child(4){background:var(--tint-b);}
 .prompts > div:nth-child(5),.prompts > div:nth-child(6){background:var(--tint-c);}
-.prompts .top{display:flex; align-items:baseline; gap:10px;}
-.prompts .no{font-family:var(--mono); font-size:15px; font-weight:700; color:#C37F8A;}
-.prompts .en{font-family:var(--disp); font-size:21px; font-weight:700; color:#624B50;}
-.prompts .lv{margin-left:auto; font-family:var(--disp); font-size:12px; font-weight:700;
-  letter-spacing:.06em; color:var(--rose-deep); background:rgba(255,255,255,.66);
-  border-radius:20px; padding:3px 9px; white-space:nowrap;}
-.prompts .cn{font-size:16px; color:#B07982; font-weight:500; margin-top:5px;}
-.prompts .d{font-size:16px; line-height:1.65; color:#756166; margin-top:10px;}
+.prompts .top{display:flex; align-items:baseline; gap:12px;}
+.prompts .no{font-family:var(--mono); font-size:17px; font-weight:700; color:#C37F8A;}
+.prompts .en{font-family:var(--disp); font-size:25px; font-weight:700; color:#624B50;}
+.prompts .lv{font-family:var(--disp); font-size:13px; font-weight:700;
+  letter-spacing:.06em; color:var(--rose-deep); background:rgba(255,255,255,.72);
+  border-radius:20px; padding:4px 11px; white-space:nowrap;}
+.prompts .cn{display:flex; align-items:center; justify-content:space-between; gap:12px;
+  font-size:20px; color:#B07982; font-weight:500; margin-top:11px;}
 
 /* QR（由 deck.js 依 data-qr 產生 SVG） */
 .qr{width:206px; height:206px; border-radius:8px; overflow:hidden;

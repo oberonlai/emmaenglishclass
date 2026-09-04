@@ -17,7 +17,11 @@
 ```bash
 instawp sync push emma --path ./ --remote-path ai-english/ \
   --exclude ".git*" "ref" "dist" "README.md" "build.mjs" ".nojekyll"
+instawp cache purge emma      # 一定要跑，不然 CDN 會繼續送舊的 deck.css
 ```
+
+站台前面有 CDN，**改完 CSS／JS 只 push 不 purge 的話，線上會拿到舊的樣式表**，
+畫面會變成沒有套用樣式的純文字。
 
 ## 檔案結構
 
