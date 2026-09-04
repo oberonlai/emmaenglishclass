@@ -5,6 +5,20 @@
 風格沿用 `ref/` 裡的簡報草稿：暖米白紙面 `#FBF7F3` × 玫瑰粉 `#C98E97`，
 每一頁都是同一種版型（頂部色帶 + PART 標籤 + 大標 + 分隔線 + 內容），**不做章節封面頁**。
 
+## 線上網址
+
+| 位置 | 網址 |
+|---|---|
+| justgirl.me（正式分享用） | <https://www.justgirl.me/ai-english/> |
+| GitHub Pages | <https://oberonlai.github.io/emmaenglishclass/> |
+
+更新 justgirl.me 上那份（只推簡報本身，不會動到站上其他東西）：
+
+```bash
+instawp sync push emma --path ./ --remote-path ai-english/ \
+  --exclude ".git*" "ref" "dist" "README.md" "build.mjs" ".nojekyll"
+```
+
 ## 檔案結構
 
 ```
