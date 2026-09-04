@@ -304,6 +304,28 @@ p{margin:0; line-height:1.75;}
 .rescards .card .ex{font-size:20px; color:#756166; line-height:1.6; margin-top:13px; font-weight:400;}
 .rescards .arw{display:grid; place-items:center; font-size:28px; color:#BD7F89;}
 
+/* ── 六種提示詞卡 ───────────────────────── */
+.prompts{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px;}
+.prompts > div{border-radius:6px; padding:16px 18px 18px; display:flex; flex-direction:column;}
+.prompts > div:nth-child(1),.prompts > div:nth-child(2){background:var(--tint-a);}
+.prompts > div:nth-child(3),.prompts > div:nth-child(4){background:var(--tint-b);}
+.prompts > div:nth-child(5),.prompts > div:nth-child(6){background:var(--tint-c);}
+.prompts .top{display:flex; align-items:baseline; gap:10px;}
+.prompts .no{font-family:var(--mono); font-size:15px; font-weight:700; color:#C37F8A;}
+.prompts .en{font-family:var(--disp); font-size:21px; font-weight:700; color:#624B50;}
+.prompts .lv{margin-left:auto; font-family:var(--disp); font-size:12px; font-weight:700;
+  letter-spacing:.06em; color:var(--rose-deep); background:rgba(255,255,255,.66);
+  border-radius:20px; padding:3px 9px; white-space:nowrap;}
+.prompts .cn{font-size:16px; color:#B07982; font-weight:500; margin-top:5px;}
+.prompts .d{font-size:16px; line-height:1.65; color:#756166; margin-top:10px;}
+
+/* QR（由 deck.js 依 data-qr 產生 SVG） */
+.qr{width:206px; height:206px; border-radius:8px; overflow:hidden;
+  background:#fff; border:1px solid var(--line); padding:9px;}
+.qr svg{display:block;}
+.qr.empty{display:grid; place-items:center; background:var(--paper-2); border:1px dashed var(--rose);
+  color:var(--faint); font-size:13px; text-align:center; line-height:1.9;}
+
 /* ── 強調底色帶 ─────────────────────────── */
 .strip{background:var(--tint-e); border-radius:6px; padding:14px 34px; text-align:center;}
 .strip .t{font-size:26px; font-weight:700; color:var(--plum);}
@@ -575,6 +597,59 @@ template{display:none;}
 <section class="slide" data-sec="Part Three · AI–3P">
   <div class="head">
     <div class="headrow">
+      <h1 class="r">六種練習提示詞</h1>
+      <div class="brand r" style="--d:.04s">Emma’s English Class</div>
+    </div>
+    <p class="subtitle r" style="--d:.08s">把 P1 的六種練習，變成可以直接複製給 AI 的指令</p>
+    <div class="hr r" style="--d:.12s"></div>
+  </div>
+
+  <div class="cols" style="grid-template-columns:1fr 206px; gap:40px; margin-top:16px; align-items:start">
+    <div class="prompts r" style="--d:.18s">
+      <div>
+        <div class="top"><span class="no">01</span><span class="en">Repetition</span><span class="lv">A1</span></div>
+        <div class="cn">模仿練習</div>
+        <div class="d">AI 說一句不超過 8 個字的生活用語，你完整重複，錯了再說一次。</div>
+      </div>
+      <div>
+        <div class="top"><span class="no">02</span><span class="en">Substitution</span><span class="lv">A1</span></div>
+        <div class="cn">替換練習</div>
+        <div class="d">保留同一個句型，每次只換一個字詞，同句練 4 次再換新句型。</div>
+      </div>
+      <div>
+        <div class="top"><span class="no">03</span><span class="en">Expansion</span><span class="lv">A2–B1</span></div>
+        <div class="cn">擴句練習</div>
+        <div class="d">AI 一次只給一個提示（When? Where? Why?），你自己把句子說得更完整。</div>
+      </div>
+      <div>
+        <div class="top"><span class="no">04</span><span class="en">Transformation</span><span class="lv">A2–B1</span></div>
+        <div class="cn">句型轉換</div>
+        <div class="d">同一個句子改時態、改句型，一次一個指令，AI 不直接給答案。</div>
+      </div>
+      <div>
+        <div class="top"><span class="no">05</span><span class="en">Summarization</span><span class="lv">B2+</span></div>
+        <div class="cn">摘要練習</div>
+        <div class="d">讀 100–150 字短文，用 2–3 句說出主題、重點與結論。</div>
+      </div>
+      <div>
+        <div class="top"><span class="no">06</span><span class="en">Paraphrasing</span><span class="lv">B2+</span></div>
+        <div class="cn">改述練習</div>
+        <div class="d">在不改變原意的前提下重新表達，AI 檢查原意與用字自不自然。</div>
+      </div>
+    </div>
+
+    <div class="qrcard r" style="--d:.34s; gap:14px">
+      <div class="qr" data-qr="https://www.justgirl.me/2026/09/blog-post-12.html"
+           data-fg="#684A50" data-bg="#FFFFFF"></div>
+      <div class="cap" style="text-align:center; font-size:17px; line-height:1.6">
+        掃描看完整提示詞<br><span style="color:var(--faint); font-size:14px">justgirl.me</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-sec="Part Three · AI–3P">
+  <div class="head">
+    <div class="headrow">
       <h1 class="r">P2 ｜ Provide Feedback</h1>
       <div class="brand r" style="--d:.04s">Emma’s English Class</div>
     </div>
@@ -773,7 +848,7 @@ template{display:none;}
   <div class="head">
     <div class="headrow">
       <h1 class="cjk r" style="font-size:42px">在 AI 時代如何學英文</h1>
-      <div class="brand r" style="--d:.04s">7 個單元 · 13 張</div>
+      <div class="brand r" style="--d:.04s">7 個單元 · 14 張</div>
     </div>
     <p class="subtitle r" style="--d:.08s">點任一單元直接跳過去，或按 <b style="color:var(--rose-deep)">→</b> 回封面。</p>
     <div class="hr r" style="--d:.12s"></div>
@@ -783,10 +858,10 @@ template{display:none;}
     <a href="#" data-goto="0"><span class="no">Opening</span><span class="nm">開場<span class="en">封面 · 關於 Emma · 今天的五段路</span></span><span class="mi">3 張</span></a>
     <a href="#" data-goto="3"><span class="no">Part One</span><span class="nm">心態<span class="en">Mindset</span></span><span class="mi">2 張</span></a>
     <a href="#" data-goto="5"><span class="no">Part Two</span><span class="nm">具體目標<span class="en">Specific Goal</span></span><span class="mi">1 張</span></a>
-    <a href="#" data-goto="6"><span class="no">Part Three</span><span class="nm">AI 的三個角色<span class="en">AI–3P</span></span><span class="mi">3 張</span></a>
-    <a href="#" data-goto="9"><span class="no">Part Four</span><span class="nm">複習<span class="en">Review–3R</span></span><span class="mi">1 張</span></a>
-    <a href="#" data-goto="10"><span class="no">Part Five</span><span class="nm">學習習慣<span class="en">Learning Habit — SCALE</span></span><span class="mi">1 張</span></a>
-    <a href="#" data-goto="11"><span class="no">Closing</span><span class="nm">收尾<span class="en">Recap ＋ Thank you</span></span><span class="mi">2 張</span></a>
+    <a href="#" data-goto="6"><span class="no">Part Three</span><span class="nm">AI 的三個角色<span class="en">AI–3P</span></span><span class="mi">4 張</span></a>
+    <a href="#" data-goto="10"><span class="no">Part Four</span><span class="nm">複習<span class="en">Review–3R</span></span><span class="mi">1 張</span></a>
+    <a href="#" data-goto="11"><span class="no">Part Five</span><span class="nm">學習習慣<span class="en">Learning Habit — SCALE</span></span><span class="mi">1 張</span></a>
+    <a href="#" data-goto="12"><span class="no">Closing</span><span class="nm">收尾<span class="en">Recap ＋ Thank you</span></span><span class="mi">2 張</span></a>
   </div>
 </section>
 </div></div>

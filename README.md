@@ -1,6 +1,6 @@
 # 在 AI 時代如何學英文 — Emma’s English Class
 
-7 個單元、13 張投影片（單檔版把目錄接在最後，共 14 張）。**一個單元一個 HTML**，改哪一段就開哪個檔，不會動到別的單元。
+7 個單元、14 張投影片（單檔版把目錄接在最後，共 15 張）。**一個單元一個 HTML**，改哪一段就開哪個檔，不會動到別的單元。
 
 風格沿用 `ref/` 裡的簡報草稿：暖米白紙面 `#FBF7F3` × 玫瑰粉 `#C98E97`，
 每一頁都是同一種版型（頂部色帶 + PART 標籤 + 大標 + 分隔線 + 內容），**不做章節封面頁**。
@@ -27,7 +27,7 @@ emmaenglishclass/
 ├── toc.html              目錄頁（按 Space 從任一頁跳過來）
 ├── 02-mindset.html       Part One      Mindset                     2 張
 ├── 03-goals.html         Part Two      Specific Goal               1 張
-├── 04-ai3p.html          Part Three    AI–3P（P1 / P2 / P3）        3 張
+├── 04-ai3p.html          Part Three    AI–3P（P1 / 六種提示詞 / P2 / P3）  4 張
 ├── 05-review.html        Part Four     Review–3R                   1 張
 ├── 06-habit.html         Part Five     Learning Habit — SCALE      1 張
 ├── 07-close.html         收尾          回顧 · Thank you            2 張
@@ -49,13 +49,15 @@ emmaenglishclass/
 | — | 開場 | 封面 → 關於 Emma（取自 justgirl.me/about）→ 今天的五段路（Mindset → Specific Goal → AI–3P → Review–3R → Learning Habit） |
 | 01 | Mindset | 身分認同 Identity × 自我憐憫 Self-Compassion → 「我要學英文」換成「我是一個英文使用者」 |
 | 02 | Specific Goal | A1 建立開口自信／A2–B1 紮穩基礎／B2+ 正確度 × 流暢度 × 話題廣度，各自的學習重點 |
-| 03 | AI–3P | P1 Practice（三個程度的練習法）→ P2 Provide Feedback（六種即時回饋）→ P3 Provide Language Resources（Collocations／Chunks／Frameworks） |
+| 03 | AI–3P | P1 Practice（三個程度的練習法）→ 六種練習提示詞（附 QR 連到完整提示詞全文）→ P2 Provide Feedback（六種即時回饋）→ P3 Provide Language Resources（Collocations／Chunks／Frameworks） |
 | 04 | Review–3R | 回想 Recall → 提取 Retrieve（問題不是不會，是提取速度）→ 變化式重複 |
 | 05 | Learning Habit | SCALE：Specific · Consistency · Achievable · Low Friction · Emergency Plan |
 | 06 | 收尾 | 五段回顧 → Thank you ＋ LINE 官方帳號 QR |
 
 所有文字都取自 `ref/AI時代如何學英語_簡報草稿 (3).pptx`，只做了分頁與排版，沒有增刪內容。
-「今天的五段路」與收尾的「五段回顧」是既有五個 PART 標題的重述；「關於 Emma」那張取自 <https://www.justgirl.me/about>。
+「今天的五段路」與收尾的「五段回顧」是既有五個 PART 標題的重述；
+「關於 Emma」取自 <https://www.justgirl.me/about>，
+「六種練習提示詞」取自 <https://www.justgirl.me/2026/09/blog-post-12.html>（頁上的 QR 就是連到這篇）。
 
 ## 怎麼放
 
